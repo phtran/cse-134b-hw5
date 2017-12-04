@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Total page size: 160 kb | Total time: 2.26 s --> 
+        <!-- html file size: 13.8 kb | Time: 738 ms -->
+        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.01 s -->
+        <!-- util.js file size: 1.4 kb | Time: 672 ms -->
+        <!-- pageRedirection.js file size: 469 b | Time: 620 ms -->
+        <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
+        <title>Add Player</title>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <style type="text/css">
+            
+            #nav{
+                height: 56px;    
+            }
+            
+            .topBarContent {
+                margin-left: 10px;
+                margin-right: 13px;
+                font-weight: bold;
+                font-size: 120%;
+                color: #FEFEFE;
+            }
+            
+            #teamName {
+                text-align: center;
+                position: relative;
+                top: -50px;
+                
+            }
+            
+            #secondBar {
+                margin: -46px auto;
+                text-align: center;
+                font-weight: bold;
+                color: #FEFEFE;
+            }
+            
+            #secondBar>div div:nth-child(3) {
+                background-color: #59A028;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #secondBar>div div {
+                background-color: #7BC24A;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #content {
+                margin-top: 80px;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            #insertImage {
+                max-width: 150px;
+                max-height: 150px;
+                border-radius: 50%;
+                background-color: lightblue;
+                line-height: 150px;
+                color: white;
+            }
+            
+            #addPlayerForm {
+                margin-top: 50px;
+            }
+            
+            button {
+                background-color: #6AB139;
+                color: #FEFEFE;
+                cursor: pointer;
+            }
+            
+            @media only screen and (max-width: 575px) {
+                 #captain {
+                    position: relative;
+                    left: 40%;
+                }
+            }
+            
+            #errorMessage {
+                color: red;
+                display: none;
+                text-align: left;
+            }
+            
+        </style>
+        <script src="/js/util.js"></script>
+        <script src="/js/pageRedirection.js"></script>
+    </head>
+
+    <body>        
+        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #6AB139;">
+              
+            <img src="/img/logo2.png" onclick="goToPage('/homeScreen.html')" style="cursor:pointer" width="38" height="30" class="d-inline-block align-top" alt="">
+            <div class="collapse navbar-collapse">
+                 <a class="navbar-brand" href="#">
+                      <span class="topBarContent">Soccer Tracker</span>
+                 </a>
+            </div>
+        </nav>
+        
+        <div class="container" id="teamName">
+            <h2 style="color: #FEFEFE;" id="teamNameValue"></h2>
+        </div>
+        
+        <div class="container-fluid" id="secondBar">
+          <div class="row">
+            <div class="col-xs col-3" onclick="goToPage('/homeScreen.html')" style="cursor:pointer">
+              Home
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/viewGameSchedule.html')" style="cursor:pointer">
+              Game
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/statsPlayers.html')" style="cursor:pointer">
+              Player
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/manage.html')" style="cursor:pointer">
+              Manage
+            </div>
+          </div>
+        </div>
+        
+        <div id="content" class="container">
+              <h2>Add a Player</h2>
+              <div id="errorMessage"></div>
+              <form id="addPlayerForm">
+              
+              <div class="form-group row justify-content-sm-center">
+                    <label for="inputFile" class="col-sm-2 col-form-label" id="insertImage">Insert an image</label>
+                    <div class="col-sm-5">
+                        <input type="file" class="form-control-file" id="inputFile">
+                    </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputFirstName" class="col-sm-2 col-form-label">First Name</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="inputFirstName" placeholder="Peter">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputLastName" class="col-sm-2 col-form-label">Last Name</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="inputLastName" placeholder="Parker">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-5">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="example@gmail.com">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputBirth" class="col-sm-2 col-form-label">Date of Birth</label>
+                <div class="col-sm-5">
+                    <input type="date" class="form-control" id="inputBirth">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputJersey" class="col-sm-2 col-form-label">Jersey Number</label>
+                <div class="col-sm-5">
+                    <input type="number" class="form-control" id="inputJersey">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                  <label for="inputPosition" class="col-sm-2 col-form-label">Position</label>
+                  <div class="col-sm-5">
+                      <select class="form-control" id="inputPosition">
+                          <option>Goalkeeper</option>
+                          <option>Defender</option>
+                          <option>Midfielder</option>
+                          <option>Forward</option>
+                      </select>
+                  </div>
+              </div>
+              <div id="captain" class="form-group row justify-content-sm-center">
+                <label for="inputCaptain" class="col-xs-1 col-form-label">Captain</label>
+                <div class="col-xs-5">
+                    <input type="checkbox" style="position:relative; left:40px; top:13px; width:30px;" class="form-control" id="inputCaptain" value="captain">
+                </div>
+              </div>
+            </form>
+            <br>
+            <button onclick="validatePlayer();" class="btn">Add Player</button>
+        </div>
+        <script>
+            function validatePlayer (){
+                let validated = true;
+                var errorsText = "We have found the following errors: <ul>";
+                
+                if (!document.getElementById("inputFile").value){
+                    errorsText += "<li>Image is required</li>";
+                    validated = false;
+                }
+                
+                if (!document.getElementById("inputFirstName").value){
+                    errorsText += "<li>First Name is required</li>";
+                    validated = false;
+                }
+                
+                
+                if (!document.getElementById("inputLastName").value){
+                    errorsText += "<li>Last Name is required</li>";
+                    validated = false;
+                }
+                
+                for (var i=0; i<currentTeam.players.length; i++){
+                    if (currentTeam.players[i].fName + currentTeam.players[i].lName == 
+                        document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value){
+                        errorsText += "<li>Full Name cannot be repeated</li>";
+                        validated = false;
+                        break;
+                    }
+                }
+                
+                if (!document.getElementById("inputEmail").value){
+                    errorsText += "<li>Email is required</li>";
+                    validated = false;
+                }
+                
+                if (!document.getElementById("inputBirth").value){
+                    errorsText += "<li>Date of Birth is required</li>";
+                    validated = false;
+                }
+                
+                if (!document.getElementById("inputJersey").value){
+                    errorsText += "<li>Jersey Number is required</li>";
+                    validated = false;
+                }
+                
+                for (var i=0; i<currentTeam.players.length; i++){
+                    if (currentTeam.players[i].number == document.getElementById("inputJersey").value){
+                        errorsText += "<li>Number is taken</li>";
+                        validated = false;
+                        break;
+                    }
+                }
+                
+                
+                if (validated) {
+                    // For the moment, cannot save images, so just put a standard one
+                    currentTeam.addPlayer ("/img/profile.png",
+                                           document.getElementById("inputFirstName").value,
+                                           document.getElementById("inputLastName").value,
+                                           document.getElementById("inputEmail").value,
+                                           document.getElementById("inputBirth").value,
+                                           document.getElementById("inputJersey").value,
+                                           document.getElementById("inputPosition").value,
+                                           document.getElementById("inputCaptain").checked);
+                    
+                    goToPage('/statsPlayers.html');
+                } else {
+                    errorsText += "</ul>";
+                    document.getElementById("errorMessage").style.display = "block";
+                    document.getElementById("errorMessage").innerHTML = errorsText;
+                    scrollTo(0,0);
+                }
+                
+            }
+            
+            document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
+        </script>
+    </body>
+</html>

@@ -1,0 +1,422 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Total page size: 172 kb | Total time: 2.24 s --> 
+        <!-- html file size: 25.3 kb | Time: 749 ms -->
+        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.06 s -->
+        <!-- util.js file size: 1.5 kb | Time: 691 ms -->
+        <!-- pageRedirection.js file size: 497 b | Time: 691 ms -->
+        <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
+        <title>Edit Game Stats</title>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <style type="text/css">
+            
+            #nav{
+                height: 56px;    
+            }
+            
+            .topBarContent {
+                margin-left: 10px;
+                margin-right: 13px;
+                font-weight: bold;
+                font-size: 120%;
+                color: #FEFEFE;
+            }
+            
+            #teamName {
+                text-align: center;
+                position: relative;
+                top: -50px;
+                
+            }
+            
+            #secondBar {
+                margin: -46px auto;
+                text-align: center;
+                font-weight: bold;
+                color: #FEFEFE;
+            }
+            
+            #secondBar>div div:nth-child(2) {
+                background-color: #59A028;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #secondBar>div div {
+                background-color: #7BC24A;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #content {
+                margin-top: 80px;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            button {
+                background-color: #6AB139;
+                color: #FEFEFE;
+                cursor: pointer;
+            }
+            
+            .editNumber {
+                width: 40px;
+            }
+
+            #errorMessage {
+                color: red;
+                display: none;
+                text-align: left;
+            }
+            
+        </style>
+        <script src="/js/util.js"></script>
+        <script src="/js/pageRedirection.js"></script>
+    </head>
+
+    <body>        
+        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #6AB139;">
+              
+            <img src="/img/logo2.png" onclick="goToPage('/homeScreen.html')" style="cursor:pointer" width="38" height="30" class="d-inline-block align-top" alt="">
+            <div class="collapse navbar-collapse">
+                 <a class="navbar-brand" href="#">
+                      <span class="topBarContent">Soccer Tracker</span>
+                 </a>
+            </div>
+        </nav>
+        
+        <div class="container" id="teamName">
+            <h2 style="color: #FEFEFE;" id="teamNameValue"></h2>
+        </div>
+        
+        <div class="container-fluid" id="secondBar">
+          <div class="row">
+            <div class="col-xs col-3" onclick="goToPage('/homeScreen.html')" style="cursor:pointer">
+              Home
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/viewGameSchedule.html')" style="cursor:pointer">
+              Game
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/statsPlayers.html')" style="cursor:pointer">
+              Player
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/manage.html')" style="cursor:pointer">
+              Manage
+            </div>
+          </div>
+        </div>
+        
+        <div id="content" class="container">
+              <div id="matchName">
+                <h2>Team Woo vs. Real San Diego</h2>
+                <div id="errorMessage"></div>
+                <p><b style="font-size:200%"><input type="number" class="editNumber" value="2" id="result0i"> : <input type="number" class="editNumber" value="1" id="result1i"></b></p>
+                <br>
+              </div>
+              
+              <p><b style="font-size:120%">Foul</b></p>
+              <div class="row">
+                <div class="col-sm" id="foul0">
+                  <input type="number" class="editNumber" value="1" id="foul0i">
+                </div>
+                <div class="col-sm-8">
+                  <div class="progress" id="foulp">
+                      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="foul1">
+                  <input type="number" class="editNumber" value="2" id="foul1i">
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Red Cards</b></p>
+              <div class="row">
+                <div class="col-sm" id="red0">
+                  <input type="number" class="editNumber" value="0" id="red0i">
+                </div>
+                <div class="col-sm-8">
+                  <div class="progress" id="redp">
+                      <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="red1">
+                  <input type="number" class="editNumber" value="1" id="red1i">
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Yellow Cards</b></p>
+              <div class="row">
+                <div class="col-sm" id="yellow0">
+                  <input type="number" class="editNumber" value="1" id="yellow0i">
+                </div>
+                <div class="col-sm-8">
+                  <div class="progress" id="yellowp">
+                      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="yellow1">
+                  <input type="number" class="editNumber" value="2" id="yellow1i">
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Shots on Goal</b></p>
+              <div class="row">
+                <div class="col-sm" id="shots0">
+                  <input type="number" class="editNumber" value="3" id="shots0i">
+                </div>
+                <div class="col-sm-8">
+                  <div class="progress" id="shotsp">
+                      <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="shots1">
+                  <input type="number" class="editNumber" value="1" id="shots1i">
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Goals</b></p>
+              <div class="row">
+                <div class="col-sm" id="goal0">
+                  <input type="number" class="editNumber" value="2" id="goal0i">
+                </div>
+                <div class="col-sm-8">
+                  <div class="progress" id="goalp">
+                      <div class="progress-bar" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="goal1">
+                  <input type="number" class="editNumber" value="1" id="goal1i">
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Corner Kicks</b></p>
+              <div class="row">
+                <div class="col-sm" id="corner0">
+                  <input type="number" class="editNumber" value="1" id="corner0i">
+                </div>
+                <div class="col-sm-8">
+                  <div class="progress" id="cornerp">
+                      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="corner1">
+                  <input type="number" class="editNumber" value="2" id="corner1i">
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Goal Kicks</b></p>
+              <div class="row">
+                <div class="col-sm" id="kick0">
+                  <input type="number" class="editNumber" value="4" id="kick0i">
+                </div>
+                <div class="col-sm-8">
+                  <div class="progress" id="kickp">
+                      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="kick1">
+                  <input type="number" class="editNumber" value="8" id="kick1i">
+                </div>
+              </div>
+              <br>
+              <br>
+              <button onclick="updateGameStats();"  class="btn">Save</button>
+        </div>
+        
+        <script>
+            document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
+            
+            let curr_match = currentTeam.currentMatch;
+            let match_name = "<h2>" + currentTeam.teamName + " vs. "  + curr_match.opponent + "</h2>";
+            
+            match_name += "<div id='errorMessage'></div>";
+            match_name += "<p><b style='font-size:200%''><input type='number' class ='editNumber' value='" + curr_match.stats.results0 + "' id='result0i'> : <input type='number' class='editNumber' value='" + curr_match.stats.results1 + "' id='result1i'></b></p><br>";
+
+            let foul0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.foul0 + "' id='foul0i'>";
+            let foul1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.foul1 + "' id='foul1i'>";
+            let b = calculateBlue(curr_match.stats.foul0, curr_match.stats.foul1);
+            let r = calculateRed(b);
+            let foulp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            foulp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+
+            let red0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.redCards0 + "' id='red0i'>";
+            let red1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.redCards1 + "' id='red1i'>";
+            b = calculateBlue(curr_match.stats.redCards0, curr_match.stats.redCards1);
+            r = calculateRed(b);
+            let redp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            redp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let yellow0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.yellowCards0 + "' id='yellow0i'>";
+            let yellow1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.yellowCards1 + "' id='yellow1i'>";
+            b = calculateBlue(curr_match.stats.yellowCards0, curr_match.stats.yellowCards1);
+            r = calculateRed(b);
+            let yellowp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            yellowp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let shots0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.shotsOnGoal0 + "' id='shots0i'>";
+            let shots1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.shotsOnGoal1 + "' id='shots1i'>";
+            b = calculateBlue(curr_match.stats.shotsOnGoal0, curr_match.stats.shotsOnGoal1);
+            r = calculateRed(b);
+            let shotsp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            shotsp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let goal0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.goals0 + "' id='goal0i'>";
+            let goal1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.goals1 + "' id='goal1i'>";
+            b = calculateBlue(curr_match.stats.goals0, curr_match.stats.goals1);
+            r = calculateRed(b);
+            let goalp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            goalp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let corner0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.cornerKicks0 + "' id='corner0i'>";
+            let corner1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.cornerKicks1 + "' id='corner1i'>";
+            b = calculateBlue(curr_match.stats.cornerKicks0, curr_match.stats.cornerKicks1);
+            r = calculateRed(b);
+            let cornerp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            cornerp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let kick0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.goalKicks0 + "' id='kick0i'>";
+            let kick1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.goalKicks1 + "' id='kick1i'>";
+            b = calculateBlue(curr_match.stats.goalKicks0, curr_match.stats.goalKicks1);
+            r = calculateRed(b);
+            let kickp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            kickp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            function calculateBlue(x,y) {
+                return (x/(x+y)) * 100;
+            }
+
+            function calculateRed(x) {
+                return 100 - x;
+            }
+
+            function updateGameStats() {
+                let validated = true;
+                var errorsText = "We have found the following errors: <ul>";
+                
+                if (!document.getElementById("result0i").value || !document.getElementById("result1i").value) {
+                    errorsText += "<li>Input the resulting scores on both sides</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("foul0i").value || !document.getElementById("foul1i").value) {
+                    errorsText += "<li>Input number of fouls on both sides</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("red0i").value || !document.getElementById("red1i").value) {
+                    errorsText += "<li>Input number of red cards on both sides</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("yellow0i").value || !document.getElementById("yellow1i").value) {
+                    errorsText += "<li>Input number of yellow cards on both sides</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("shots0i").value || !document.getElementById("shots1i").value) {
+                    errorsText += "<li>Input number of shots on goals on both sides</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("goal0i").value || !document.getElementById("goal1i").value) {
+                    errorsText += "<li>Input number of goals on both sides</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("corner0i").value || !document.getElementById("corner1i").value) {
+                    errorsText += "<li>Input number of corner kicks on both sides</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("kick0i").value || !document.getElementById("kick1i").value) {
+                    errorsText += "<li>Input number of goal kicks on both sides</li>";
+                    validated = false;
+                }
+                
+                if (document.getElementById("result0i").value != document.getElementById("goal0i").value ||
+                   document.getElementById("result1i").value != document.getElementById("goal1i").value) {
+                    errorsText += "<li>Result and goals should have the same value</li>";
+                    validated = false;
+                }
+
+
+                if (validated) {
+                    var i = curr_match.id;
+                    var myStats = {
+                        results0 : parseInt(document.getElementById("result0i").value),
+                        results1 : parseInt(document.getElementById("result1i").value),
+                        foul0 : parseInt(document.getElementById("foul0i").value),
+                        foul1 : parseInt(document.getElementById("foul1i").value),
+                        redCards0 : parseInt(document.getElementById("red0i").value),
+                        redCards1 : parseInt(document.getElementById("red1i").value),
+                        yellowCards0 : parseInt(document.getElementById("yellow0i").value),
+                        yellowCards1 : parseInt(document.getElementById("yellow1i").value),
+                        shotsOnGoal0 : parseInt(document.getElementById("shots0i").value),
+                        shotsOnGoal1 : parseInt(document.getElementById("shots1i").value),
+                        goals0 : parseInt(document.getElementById("goal0i").value),
+                        goals1 : parseInt(document.getElementById("goal1i").value),
+                        cornerKicks0 : parseInt(document.getElementById("corner0i").value),
+                        cornerKicks1 : parseInt(document.getElementById("corner1i").value),
+                        goalKicks0 : parseInt(document.getElementById("kick0i").value),
+                        goalKicks1 : parseInt(document.getElementById("kick1i").value)
+                    }
+                    currentTeam.matches[i].stats = myStats;
+                    currentTeam.currentMatch.stats = myStats;
+                    goToPage('/viewGameStats.html');
+                } else {
+                    errorsText += "</ul>";
+                    document.getElementById("errorMessage").style.display = "block";
+                    document.getElementById("errorMessage").innerHTML = errorsText;
+                    scrollTo(0,0);
+                }
+            }
+
+            document.getElementById("matchName").innerHTML = match_name;
+            
+            document.getElementById("foul0").innerHTML = foul0;
+            document.getElementById("foul1").innerHTML = foul1;
+            document.getElementById("foulp").innerHTML = foulp;
+
+            document.getElementById("red0").innerHTML = red0;
+            document.getElementById("red1").innerHTML = red1;
+            document.getElementById("redp").innerHTML = redp;
+
+            document.getElementById("yellow0").innerHTML = yellow0;
+            document.getElementById("yellow1").innerHTML = yellow1;
+            document.getElementById("yellowp").innerHTML = yellowp;
+
+            document.getElementById("shots0").innerHTML = shots0;
+            document.getElementById("shots1").innerHTML = shots1;
+            document.getElementById("shotsp").innerHTML = shotsp;
+            
+            document.getElementById("goal0").innerHTML = goal0;
+            document.getElementById("goal1").innerHTML = goal1;
+            document.getElementById("goalp").innerHTML = goalp;
+
+            document.getElementById("corner0").innerHTML = corner0;
+            document.getElementById("corner1").innerHTML = corner1;
+            document.getElementById("cornerp").innerHTML = cornerp;
+
+            document.getElementById("kick0").innerHTML = kick0;
+            document.getElementById("kick1").innerHTML = kick1;
+            document.getElementById("kickp").innerHTML = kickp;
+
+
+
+        </script>
+    </body>
+</html>

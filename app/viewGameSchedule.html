@@ -1,0 +1,298 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Total page size: 173 kb | Total time: 2.31 s --> 
+        <!-- html file size: 14.2 kb | Time: 704 ms -->
+        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.19 s -->
+        <!-- util.js file size: 1.4 kb | Time: 648 ms -->
+        <!-- pageRedirection.js file size: 638 b | Time: 632 ms -->
+        <!-- logo2.png file size: 122 kb  | Time: 1.52 s -->
+        <!-- calendar.png file size: 6.2 | Time: 802 ms -->
+        <!-- edit.png file size: 6.2 kb | Time: 808 ms -->
+        <title>Your Games</title>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <style type="text/css">
+            
+            #nav{
+                height: 56px;    
+            }
+            
+            .topBarContent {
+                margin-left: 10px;
+                margin-right: 13px;
+                font-weight: bold;
+                font-size: 120%;
+                color: #FEFEFE;
+            }
+            
+            #teamName {
+                text-align: center;
+                position: relative;
+                top: -50px;
+                
+            }
+            
+            #secondBar {
+                margin: -46px auto;
+                text-align: center;
+                font-weight: bold;
+                color: #FEFEFE;
+            }
+            
+            #secondBar>div div:nth-child(2) {
+                background-color: #59A028;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #secondBar>div div {
+                background-color: #7BC24A;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #content {
+                margin-top: 80px;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            hr {
+                background-color: black;
+                margin-top: 60px;
+                margin-bottom: 60px;
+            }
+            
+            .game {
+                background-color:#9DFF89; 
+                padding-top: 30px;
+                padding-bottom:30px;
+            }
+            
+            #edit1, #edit2 {
+                position: relative;
+                top: -25px;
+            }
+            
+            @media only screen and (min-width: 1000px) {
+                #edit1, #edit2 {
+                    left: 250px;
+                }
+            }
+            @media only screen and (max-width: 1000px) {
+                #edit1, #edit2 {
+                    left: 200px;
+                }
+            }
+            @media only screen and (max-width: 750px) {
+                #edit1, #edit2 {
+                    left: 150px;
+                }
+            }
+            @media only screen and (max-width: 625px) {
+                #edit1, #edit2 {
+                    left: 130px;
+                }
+            }
+            @media only screen and (max-width: 500px) {
+                #edit1, #edit2 {
+                    left: 100px;
+                }
+            }
+            
+            
+        </style>
+        <script src="/js/pageRedirection.js"></script>
+        <script src="/js/util.js"></script>
+    </head>
+
+    <body>        
+        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #6AB139;">
+              
+            <img src="/img/logo2.png" onclick="goToPage('/homeScreen.html')" style="cursor:pointer" width="38" height="30" class="d-inline-block align-top" alt="">
+            <div class="collapse navbar-collapse">
+                 <a class="navbar-brand" href="#">
+                      <span class="topBarContent">Soccer Tracker</span>
+                 </a>
+            </div>
+        </nav>
+        
+        <div class="container" id="teamName">
+            <h2 style="color: #FEFEFE;" id="teamNameValue"></h2>
+        </div>
+        
+        <div class="container-fluid" id="secondBar">
+          <div class="row">
+            <div class="col-xs col-3" onclick="goToPage('/homeScreen.html')" style="cursor:pointer">
+              Home
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/viewGameSchedule.html')" style="cursor:pointer">
+              Game
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/statsPlayers.html')" style="cursor:pointer">
+              Player
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/manage.html')" style="cursor:pointer">
+              Manage
+            </div>
+          </div>
+        </div>
+        
+        <div id="content" class="container">
+              <div id="game0" class="game" style="cursor:pointer" onclick="prevGameStats()">
+                 <h2>Previous Game</h2>
+                 <div id="prevGame">
+                 <p><em id="prevReplace">10/15 Sun 8:00 pm</em> </p>
+                 <p id="prevMatchLocation">San Diego Petco Park</p>
+                 <p id="prevMatchup">Team Woo vs FC Tijuana</p>
+                 <p><b style="font-size:200%" id="prevScore">2 : 1</b></p>
+                 <p id="prevHomeAway">Home game</p>
+                 </div>
+              </div>
+              <hr>  
+              
+              <div id="game1" class="game">
+                  <img id="edit1" src="/img/edit.png" onclick="editToday();" style="cursor:pointer" alt="edit" height="25" width="25">
+                  <h2>Today's Game</h2>
+                  <div id="todayGame">
+                    <p> <em id="todayReplace">10/15 Sun 8:00 pm</em> <img style="margin-left: 20px;" src="/img/calendar.png" alt="calendar" height="25" width="25"></p>
+                    <p id="todayMatchLocation">San Diego Petco Park</p>
+                    <p id="todayMatchup">Team Woo vs Real San Diego</p>
+                    <p id="todayHomeAway">Home game</p>                    
+                  </div>
+                  
+              </div>
+              <hr>
+              <div id="game2" class="game">
+                  <img id="edit2" src="/img/edit.png" onclick="editNext();" style="cursor:pointer" alt="edit" height="25" width="25">
+                  <h2>Next Upcoming Game</h2>
+                  <div id="nextGame">
+                  <p><em id="nextReplace">10/15 Sun 8:00 pm</em></p>
+                  <p id="nextMatchLocation">San Diego Petco Park</p>
+                  <p id="nextMatchup">Team Woo vs Atletico de Balboa</p>
+                  <p id="nextHomeAway">Away game</p>
+                  </div>
+              </div>
+              
+        </div>
+        
+        <script>
+            document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
+            var monthNames = ["January", "February", "March","April", "May", "June", "July",
+                              "August", "September", "October","November", "December"];
+
+            var prevFound = false;
+            var matchPrev;
+            let prevDate = new Date(Date.now());
+            for (i = prevDate.getDate()-1; i >= 0; i--) {
+                currentTeam.matches.forEach( (prevMatch) => {
+                let currentMatchDate = new Date(prevMatch.date);
+                currentMatchDate.setTime(currentMatchDate.getTime() + (8*60*60*1000));
+                if (currentMatchDate.getFullYear() === prevDate.getFullYear() &&
+                    currentMatchDate.getMonth() === prevDate.getMonth() && 
+                    currentMatchDate.getDate() === i) {
+                        matchPrev = prevMatch;
+                        prevFound = true;
+                    }
+                });
+                if (prevFound === true) {
+                    break;
+                }
+            }
+            if (prevFound === false) {
+              document.getElementById("prevGame").innerHTML = "No previous matches for this month";
+              document.getElementById("game0").style.cursor = "auto";
+              document.getElementById("game0").onclick = function() {
+                return false;
+              }
+            }
+            else {
+                var matchPrevDate = new Date(matchPrev.date);
+                matchPrevDate.setTime(matchPrevDate.getTime() + (8*60*60*1000));
+                document.getElementById("prevReplace").innerHTML = monthNames[matchPrevDate.getMonth()] + ' ' +
+                                                                        matchPrevDate.getDate() + ', ' + matchPrevDate.getFullYear();
+                document.getElementById("prevMatchLocation").innerHTML = matchPrev.location;
+                document.getElementById("prevMatchup").innerHTML = currentTeam.teamName + " vs " + matchPrev.opponent;
+                document.getElementById("prevScore").innerHTML = matchPrev.stats.results0 + " : " + matchPrev.stats.results1;
+                document.getElementById("prevHomeAway").innerHTML = matchPrev.status[0].toUpperCase() + matchPrev.status.substring(1) + ' game';
+                currentTeam.currentMatch = matchPrev;
+            }
+
+            // today game
+            var todayMatch;
+            let realTimeDate = new Date(Date.now());
+            currentTeam.matches.forEach( (match) => {
+              let currentMatchDate = new Date(match.date);
+              currentMatchDate.setTime(currentMatchDate.getTime() + (8*60*60*1000));
+              if (currentMatchDate.getFullYear() === realTimeDate.getFullYear() &&
+                  currentMatchDate.getMonth() === realTimeDate.getMonth() && 
+                  currentMatchDate.getDate() === realTimeDate.getDate()) {
+                    todayMatch = match;
+              }
+            });
+            if (todayMatch === undefined) {
+              document.getElementById("todayGame").innerHTML = "No matches today! :(";
+              document.querySelectorAll("#edit1")[0].style.display = "none";
+            }
+            else {
+                document.getElementById("todayReplace").innerHTML = monthNames[realTimeDate.getMonth()] + ' ' +
+                                                                realTimeDate.getDate() + ', ' + realTimeDate.getFullYear();
+                document.getElementById("todayMatchLocation").innerHTML = todayMatch.location;
+                document.getElementById("todayMatchup").innerHTML = currentTeam.teamName + " vs " + todayMatch.opponent;
+                document.getElementById("todayHomeAway").innerHTML = todayMatch.status[0].toUpperCase() + todayMatch.status.substring(1) + ' game';
+                currentTeam.currentMatch = todayMatch;
+            }
+
+            // next game
+            let nextDate = new Date(Date.now());
+            var nextFound = false;
+            var matchNext;
+            for (i = nextDate.getDate()+1; i < 32; i++) {
+                currentTeam.matches.forEach( (next) => {
+                    let currentMatchDate = new Date(next.date);
+                    currentMatchDate.setTime(currentMatchDate.getTime() + (8*60*60*1000));
+                    if (currentMatchDate.getFullYear() === nextDate.getFullYear() &&
+                        currentMatchDate.getMonth() === nextDate.getMonth() && 
+                        currentMatchDate.getDate() === i) {
+                            nextFound = true;
+                            matchNext = next;
+                    }
+                });
+                if (nextFound === true) {
+                        break;
+                }
+            }
+            if (nextFound === false) {
+              document.getElementById("nextGame").innerHTML = "No remaining matches for this month";
+              document.querySelectorAll("#edit2")[0].style.display = "none";
+            }
+            else {
+                var matchNextDate = new Date(matchNext.date);
+                matchNextDate.setTime(matchNextDate.getTime() + (8*60*60*1000));
+                document.getElementById("nextReplace").innerHTML = monthNames[matchNextDate.getMonth()] + ' ' +
+                                                                    matchNextDate.getDate() + ', ' + matchNextDate.getFullYear();
+                document.getElementById("nextMatchLocation").innerHTML = matchNext.location;
+                document.getElementById("nextMatchup").innerHTML = currentTeam.teamName + " vs " + matchNext.opponent;
+                document.getElementById("nextHomeAway").innerHTML = matchNext.status[0].toUpperCase() + matchNext.status.substring(1) + ' game';
+                currentTeam.currentMatch = matchNext;
+            }
+
+            function prevGameStats() {
+                currentTeam.currentMatch = matchPrev;
+                goToPage('/viewGameStats.html')
+            }
+            function editToday() {
+                currentTeam.currentMatch = todayMatch;
+                goToPage('/editGame.html')
+            }            
+            function editNext() {
+                currentTeam.currentMatch = matchNext;
+                goToPage('/editGame.html')
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Total page size: 171 kb | Total time: 2.25 s --> 
+        <!-- html file size: 19.2 kb | Time: 746 ms -->
+        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.06 s -->
+        <!-- util.js file size: 1.4 kb | Time: 621 ms -->
+        <!-- pageRedirection.js file size: 482 b | Time: 603 ms -->
+        <!-- logo2.png file size: 122 kb  | Time: 1.43 s -->
+        <!-- edit.png file size: 6.2 kb | Time: 682 ms -->
+        <title>View Game Stats</title>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <style type="text/css">
+            
+            #nav{
+                height: 56px;    
+            }
+            
+            .topBarContent {
+                margin-left: 10px;
+                margin-right: 13px;
+                font-weight: bold;
+                font-size: 120%;
+                color: #FEFEFE;
+            }
+            
+            #teamName {
+                text-align: center;
+                position: relative;
+                top: -50px;
+                
+            }
+            
+            #secondBar {
+                margin: -46px auto;
+                text-align: center;
+                font-weight: bold;
+                color: #FEFEFE;
+            }
+            
+            #secondBar>div div:nth-child(2) {
+                background-color: #59A028;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #secondBar>div div {
+                background-color: #7BC24A;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #content {
+                margin-top: 80px;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            
+            #edit {
+                position: absolute;
+                top: 112px;
+            }
+            
+            @media only screen and (min-width: 1100px) {
+                #edit {
+                    right: 250px;
+                }
+            }
+            @media only screen and (max-width: 1100px) {
+                #edit {
+                    right: 170px;
+                }
+            }
+            @media only screen and (max-width: 900px) {
+                #edit {
+                    right: 110px;
+                }
+            }
+            @media only screen and (max-width: 700px) {
+                #edit {
+                    right: 40px;
+                }
+            }
+            @media only screen and (max-width: 400px) {
+                #edit {
+                    right: 10px;
+                }
+            }
+            
+            
+        </style>
+        <script src="/js/pageRedirection.js"></script>
+        <script src="/js/util.js"></script>
+    </head>
+
+    <body>        
+        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #6AB139;">
+              
+            <img src="/img/logo2.png" onclick="goToPage('/homeScreen.html')" style="cursor:pointer" width="38" height="30" class="d-inline-block align-top" alt="">
+            <div class="collapse navbar-collapse">
+                 <a class="navbar-brand" href="#">
+                      <span class="topBarContent">Soccer Tracker</span>
+                 </a>
+            </div>
+        </nav>
+        
+        <div class="container" id="teamName">
+            <h2 style="color: #FEFEFE;" id="teamNameValue"></h2>
+        </div>
+        
+        <div class="container-fluid" id="secondBar">
+          <div class="row">
+            <div class="col-xs col-3" onclick="goToPage('/homeScreen.html')" style="cursor:pointer">
+              Home
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/viewGameSchedule.html')" style="cursor:pointer">
+              Game
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/statsPlayers.html')" style="cursor:pointer">
+              Player
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/manage.html')" style="cursor:pointer">
+              Manage
+            </div>
+          </div>
+        </div>
+        
+        <div id="content" class="container">
+              <img id="edit" src="/img/edit.png" onclick="goToPage('/editGameStats.html')" style="cursor:pointer" alt="edit" height="25" width="25">
+              <div id="matchName">
+                  <h2>Team Woo vs. Real San Diego</h2>
+              <p><b style="font-size:200%">2 : 1</b></p>
+              <br>
+              </div>
+              
+              <p><b style="font-size:120%">Foul</b></p>
+              <div class="row">
+                <div class="col-sm" id="foul0">
+                  <b>1</b>
+                </div>
+                <div class="col-sm-9">
+                  <div class="progress" id="foulp">
+                      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="foul1">
+                  <b>2</b>
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Red Cards</b></p>
+              <div class="row">
+                <div class="col-sm" id="red0">
+                  <b>0</b>
+                </div>
+                <div class="col-sm-9">
+                  <div class="progress" id="redp">
+                      <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="red1">
+                  <b>1</b>
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Yellow Cards</b></p>
+              <div class="row">
+                <div class="col-sm" id="yellow0">
+                  <b>1</b>
+                </div>
+                <div class="col-sm-9">
+                  <div class="progress" id="yellowp">
+                      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="yellow1">
+                  <b>2</b>
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Shots on Goal</b></p>
+              <div class="row">
+                <div class="col-sm" id="shots0">
+                  <b>3</b>
+                </div>
+                <div class="col-sm-9">
+                  <div class="progress" id="shotsp">
+                      <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="shots1">
+                  <b>1</b>
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Goals</b></p>
+              <div class="row">
+                <div class="col-sm" id="goal0">
+                  <b>2</b>
+                </div>
+                <div class="col-sm-9">
+                  <div class="progress" id="goalp">
+                      <div class="progress-bar" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="goal1">
+                  <b>1</b>
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Corner Kicks</b></p>
+              <div class="row">
+                <div class="col-sm" id="corner0">
+                  <b>1</b>
+                </div>
+                <div class="col-sm-9">
+                  <div class="progress" id="cornerp">
+                      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="corner1">
+                  <b>2</b>
+                </div>
+              </div>
+              <br>
+              <p><b style="font-size:120%">Goal Kicks</b></p>
+              <div class="row">
+                <div class="col-sm" id="kick0">
+                  <b>4</b>
+                </div>
+                <div class="col-sm-9">
+                  <div class="progress" id="kickp">
+                      <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="col-sm" id="kick1">
+                  <b>8</b>
+                </div>
+              </div>
+        </div>
+        <script>
+            document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
+            let curr_match = currentTeam.currentMatch;
+
+            let match_name = "<h2>" + currentTeam.teamName + " vs. "  + curr_match.opponent + "</h2>";
+            match_name += "<p><b style='font-size:200%''>" + curr_match.stats.results0 + " : " + curr_match.stats.results1 + "</b></p><br>";
+
+            let foul0 = "<b>" + parseInt(curr_match.stats.foul0) + "</b>";
+            let foul1 = "<b>" + parseInt(curr_match.stats.foul1) + "</b>";
+            let b = calculateBlue(curr_match.stats.foul0, curr_match.stats.foul1);
+            let r = calculateRed(b);
+            let foulp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            foulp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+
+            let red0 = "<b>" + parseInt(curr_match.stats.redCards0) + "</b>";
+            let red1 = "<b>" + parseInt(curr_match.stats.redCards1) + "</b>";
+            b = calculateBlue(curr_match.stats.redCards0, curr_match.stats.redCards1);
+            r = calculateRed(b);
+            let redp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            redp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let yellow0 = "<b>" + parseInt(curr_match.stats.yellowCards0) + "</b>";
+            let yellow1 = "<b>" + parseInt(curr_match.stats.yellowCards1) + "</b>";
+            b = calculateBlue(curr_match.stats.yellowCards0, curr_match.stats.yellowCards1);
+            r = calculateRed(b);
+            let yellowp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            yellowp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let shots0 = "<b>" + parseInt(curr_match.stats.shotsOnGoal0) + "</b>";
+            let shots1 = "<b>" + parseInt(curr_match.stats.shotsOnGoal1) + "</b>";
+            b = calculateBlue(curr_match.stats.shotsOnGoal0, curr_match.stats.shotsOnGoal1);
+            r = calculateRed(b);
+            let shotsp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            shotsp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let goal0 = "<b>" + parseInt(curr_match.stats.goals0) + "</b>";
+            let goal1 = "<b>" + parseInt(curr_match.stats.goals1) + "</b>";
+            b = calculateBlue(curr_match.stats.goals0, curr_match.stats.goals1);
+            r = calculateRed(b);
+            let goalp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            goalp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let corner0 = "<b>" + parseInt(curr_match.stats.cornerKicks0) + "</b>";
+            let corner1 = "<b>" + parseInt(curr_match.stats.cornerKicks1) + "</b>";
+            b = calculateBlue(curr_match.stats.cornerKicks0, curr_match.stats.cornerKicks1);
+            r = calculateRed(b);
+            let cornerp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            cornerp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            let kick0 = "<b>" + parseInt(curr_match.stats.goalKicks0) + "</b>";
+            let kick1 = "<b>" + parseInt(curr_match.stats.goalKicks1) + "</b>";
+            b = calculateBlue(curr_match.stats.goalKicks0, curr_match.stats.goalKicks1);
+            r = calculateRed(b);
+            let kickp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
+            kickp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
+
+            function calculateBlue(x,y) {
+                return (x/(x+y)) * 100;
+            }
+
+            function calculateRed(x) {
+                return 100 - x;
+            }
+
+            document.getElementById("matchName").innerHTML = match_name;
+            document.getElementById("foul0").innerHTML = foul0;
+            document.getElementById("foul1").innerHTML = foul1;
+            document.getElementById("foulp").innerHTML = foulp;
+
+            document.getElementById("red0").innerHTML = red0;
+            document.getElementById("red1").innerHTML = red1;
+            document.getElementById("redp").innerHTML = redp;
+
+            document.getElementById("yellow0").innerHTML = yellow0;
+            document.getElementById("yellow1").innerHTML = yellow1;
+            document.getElementById("yellowp").innerHTML = yellowp;
+
+            document.getElementById("shots0").innerHTML = shots0;
+            document.getElementById("shots1").innerHTML = shots1;
+            document.getElementById("shotsp").innerHTML = shotsp;
+            
+            document.getElementById("goal0").innerHTML = goal0;
+            document.getElementById("goal1").innerHTML = goal1;
+            document.getElementById("goalp").innerHTML = goalp;
+
+            document.getElementById("corner0").innerHTML = corner0;
+            document.getElementById("corner1").innerHTML = corner1;
+            document.getElementById("cornerp").innerHTML = cornerp;
+
+            document.getElementById("kick0").innerHTML = kick0;
+            document.getElementById("kick1").innerHTML = kick1;
+            document.getElementById("kickp").innerHTML = kickp;
+
+        </script>
+    </body>
+</html>

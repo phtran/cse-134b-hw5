@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Total page size: 164 kb | Total time: 2.28 s --> 
+        <!-- html file size: 11.6 kb | Time: 728 ms -->
+        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.00 s -->
+        <!-- util.js file size: 1.4 kb | Time: 639 ms -->
+        <!-- pageRedirection.js file size: 670 b | Time: 661 ms -->
+        <!-- logo2.png file size: 122 kb  | Time: 1.46 s -->
+        <!-- calendar.png file size: 6.2 | Time: 696 ms -->
+        <title>Add Game</title>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <style type="text/css">
+            
+            #nav{
+                height: 56px;    
+            }
+            
+            .topBarContent {
+                margin-left: 10px;
+                margin-right: 13px;
+                font-weight: bold;
+                font-size: 120%;
+                color: #FEFEFE;
+            }
+            
+            #teamName {
+                text-align: center;
+                position: relative;
+                top: -50px;
+                
+            }
+            
+            #secondBar {
+                margin: -46px auto;
+                text-align: center;
+                font-weight: bold;
+                color: #FEFEFE;
+            }
+            
+            #secondBar>div div:nth-child(2) {
+                background-color: #59A028;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #secondBar>div div {
+                background-color: #7BC24A;
+                padding: 10px 0;
+                border: 1px solid white;
+            }
+            
+            #content {
+                margin-top: 80px;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            #addGameForm {
+                margin-top: 50px;
+            }
+            
+            button {
+                background-color: #6AB139;
+                color: #FEFEFE;
+                cursor: pointer;
+            }
+
+            #errorMessage {
+                color: red;
+                display: none;
+                text-align: left;
+            }
+                
+        </style>
+        <script src="/js/util.js"></script>
+        <script src="/js/pageRedirection.js"></script>
+    </head>
+
+    <body>        
+        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #6AB139;">
+              
+            <img src="/img/logo2.png" onclick="goToPage('/homeScreen.html')" style="cursor:pointer" width="38" height="30" class="d-inline-block align-top" alt="">
+            <div class="collapse navbar-collapse">
+                 <a class="navbar-brand" href="#">
+                      <span class="topBarContent">Soccer Tracker</span>
+                 </a>
+            </div>
+        </nav>
+        
+        <div class="container" id="teamName">
+            <h2 style="color: #FEFEFE;" id="teamNameValue"></h2>
+        </div>
+        
+        <div class="container-fluid" id="secondBar">
+          <div class="row">
+            <div class="col-xs col-3" onclick="goToPage('/homeScreen.html')" style="cursor:pointer">
+              Home
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/viewGameSchedule.html')" style="cursor:pointer">
+              Game
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/statsPlayers.html')" style="cursor:pointer">
+              Player
+            </div>
+            <div class="col-xs col-3" onclick="goToPage('/manage.html')" style="cursor:pointer">
+              Manage
+            </div>
+          </div>
+        </div>
+        
+        <div id="content" class="container">
+              <h1>Add a Game</h1>
+              <div id="errorMessage"></div>
+              <form id="addGameForm">
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputTeam" class="col-sm-2 col-form-label">Opponent Team</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="inputTeam" placeholder="Real San Diego">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputDate" class="col-sm-2 col-form-label">Date/Time
+                    <img style="margin-left: 20px;" src="/img/calendar.png" alt="calendar" height="25" width="25">
+                </label>
+                <div class="col-sm-5">
+                    <input type="date" class="form-control" id="inputDate">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputLocation" class="col-sm-2 col-form-label">Location</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="inputLocation" placeholder="San Diego Zoo">
+                </div>
+              </div>
+              <br>
+              <p>Status</p>
+              <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="status" value="home" id = "homeBox">
+                    Home
+                  </label>
+              </div>
+              <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="status" value="away" id = "awayBox">
+                    Away
+                  </label>
+              </div>
+            </form>
+            <br>
+            <button onclick="validateGame();" class="btn">Add Game</button>
+        </div>
+        <script>
+            function validateGame() {
+                let validated = true;
+                var errorsText = "We have found the following errors: <ul>";
+
+                if (!document.getElementById("inputTeam").value) {
+                    errorsText += "<li>Opponent Team is required</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("inputDate").value) {
+                    errorsText += "<li>Date is required</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("inputLocation").value) {
+                    errorsText += "<li>Location is required</li>";
+                    validated = false;
+                }
+
+                if (!document.getElementById("homeBox").checked && !document.getElementById("awayBox").checked) {
+                    errorsText += "<li>Status is required</li>";
+                    validated = false;
+                }
+
+                if (document.getElementById("homeBox").checked && document.getElementById("awayBox").checked) {
+                    errorsText += "<li>Game cannot be both home and away</li>";
+                    validated = false;
+                }
+
+                if (validated) {
+                    var stats = {
+                        results0: 0,
+                        results1:  0,
+                        foul0: 0,
+                        foul1: 0,
+                        redCards0: 0,
+                        redCards1: 0,
+                        yellowCards0: 0,
+                        yellowCards1: 0,
+                        shotsOnGoal0: 0,
+                        shotsOnGoal1: 0,
+                        goals0: 0,
+                        goals1: 0,
+                        cornerKicks0: 0,
+                        cornerKicks1: 0,
+                        goalKicks0: 0,
+                        goalKicks1: 0
+                    };
+
+                    if (document.getElementById("homeBox").checked) {
+                        currentTeam.addMatch(document.getElementById("inputTeam").value,
+                                             document.getElementById("inputDate").value,
+                                             document.getElementById("inputLocation").value,
+                                             "home",
+                                             stats);
+                    } else {
+                        currentTeam.addMatch(document.getElementById("inputTeam").value,
+                                             document.getElementById("inputDate").value,
+                                             document.getElementById("inputLocation").value,
+                                             "away",
+                                             stats);
+                    }
+        
+                    goToPage('/viewGameSchedule.html');
+                } else {
+                    errorsText += "</ul>";
+                    document.getElementById("errorMessage").style.display = "block";
+                    document.getElementById("errorMessage").innerHTML = errorsText;
+                    scrollTo(0,0);
+                }
+            }
+
+            document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
+        </script>
+    </body>
+</html>

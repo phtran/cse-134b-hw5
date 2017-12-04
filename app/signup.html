@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Total page size: 157 kb | Total time: 2.21s --> 
+        <!-- html file size: 9.0 kb | Time: 722 ms -->
+        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.18 s -->
+        <!-- util.js file size: 1.4 kb | Time: 641 ms -->
+        <!-- pageRedirection.js file size: 497 b | Time: 598 ms -->
+        <!-- logo2.png file size: 122 kb  | Time: 1.38 s -->
+        <title>Sign Up to Soccer Tracker!</title>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <style type="text/css">
+            #topBarContent {
+                margin-left: 10px;
+                font-weight: bold;
+                color: #FEFEFE;
+            }
+            
+            #content {
+                margin-top: 80px;
+                text-align: center;
+            }
+            
+            #signUpForm {
+                margin-top: 20px;
+            }
+            
+            button {
+                background-color: #6AB139;
+                color: #FEFEFE;
+                cursor: pointer;
+                margin-bottom: 20px;
+            }
+            
+            #errorMessage {
+                color: red;
+                display: none;
+                text-align: left;
+            }
+            
+        </style>
+        <script src="/js/pageRedirection.js"></script>
+        <script src="/js/util.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+             <nav class="navbar fixed-top navbar-light" style="background-color: #6AB139;">
+              <a class="navbar-brand" href="#">
+                <img src="/img/logo2.png" onclick="goToPage('/index.html')" style="cursor:pointer" width="38" height="30" class="d-inline-block align-top" alt="">
+                  <span id="topBarContent">Soccer Tracker</span>
+              </a>
+             </nav>
+        </div>
+        <div id="content" class="container">
+             <h1>Sign Up</h1>
+             <div id="errorMessage"></div>
+             <form id="signUpForm">
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputUsername" class="col-sm-2 col-form-label">Username (Email)</label>
+                <div class="col-sm-5">
+                    <input type="email" class="form-control" id="inputUsername" placeholder="example@gmail.com">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputFirstName" class="col-sm-2 col-form-label">First Name</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="inputFirstName" placeholder="Peter">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputLastName" class="col-sm-2 col-form-label">Last Name</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="inputLastName" placeholder="Parker">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputTeamName" class="col-sm-2 col-form-label">Team Name</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="inputTeamName" placeholder="Real Madrid C.F.">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" id="inputPassword">
+                </div>
+              </div>
+              <div class="form-group row justify-content-sm-center">
+                <label for="inputPasswordC" class="col-sm-2 col-form-label">Confirm Password</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" id="inputPasswordC">
+                </div>
+              </div>
+              <p>Who are you?</p>
+              <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" id="type1" type="radio" name="typeUser" value="parent">
+                    Parent
+                  </label>
+              </div>
+              <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" id="type2" type="radio" name="typeUser" value="coach">
+                    Coach
+                  </label>
+              </div>
+              <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" id="type3" type="radio" name="typeUser" value="player">
+                    Player
+                  </label>
+              </div>
+            </form>
+            <br>
+            <button onclick="signUp()" class="btn">Submit</button>
+        </div>
+        
+        <script>
+            function signUp(){
+                var validated = true;
+                var errorsText = "We have found the following errors: <ul>";
+                
+                if (!document.getElementById("inputUsername").value){
+                    errorsText += "<li>Invalid Username</li>";
+                    validated = false;
+                }
+                
+                for (var i=0; i<users.length; i++){
+                    if (document.getElementById("inputUsername").value == users[i].username){
+                        errorsText += "<li>Username already taken</li>";
+                        validated = false;
+                    }
+                }
+                
+                if (!document.getElementById("inputFirstName").value){
+                    errorsText += "<li>First Name is required</li>";
+                    validated = false;
+                }
+                
+                if (!document.getElementById("inputLastName").value){
+                    errorsText += "<li>Last Name is required</li>";
+                    validated = false;
+                }
+                
+                if (!document.getElementById("inputTeamName").value){
+                    errorsText += "<li>Team Name is required</li>";
+                    validated = false;
+                }
+                
+                if (!document.getElementById("inputPassword").value){
+                    errorsText += "<li>Password is required</li>";
+                    validated = false;
+                } else {                    
+                    if (document.getElementById("inputPassword").value != document.getElementById("inputPasswordC").value){
+                        errorsText += "<li>Confirmation password does not match</li>";
+                        validated = false;
+                    }
+                }
+                
+                var userType;
+                if (document.getElementById('type1').checked) {
+                    userType = document.getElementById('type1').value;
+                } else if (document.getElementById('type2').checked) {
+                    userType = document.getElementById('type2').value;
+                } else if (document.getElementById('type3').checked) {
+                    userType = document.getElementById('type3').value;
+                } else {
+                    errorsText += "<li>You have to select one user type</li>";
+                    validated = false;
+                }
+                
+                if (validated){
+                    addUser(document.getElementById("inputUsername").value,
+                            document.getElementById("inputFirstName").value,
+                            document.getElementById("inputLastName").value,
+                            document.getElementById("inputPassword").value,
+                            userType,
+                            document.getElementById("inputTeamName").value
+                           );
+
+                    goToPage('/index.html');
+                } else {
+                    errorsText += "</ul>";
+                    document.getElementById("errorMessage").style.display = "block";
+                    document.getElementById("errorMessage").innerHTML = errorsText;
+                    document.getElementById("inputPassword").value ="";
+                    document.getElementById("inputPasswordC").value ="";
+                    scrollTo(0,0);
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,225 @@
+/* File size: 1.1 kb | Time: 654 ms */
+#nav {
+    height: 56px;    
+}
+            
+.topBarContent {
+    margin-left: 10px;
+    margin-right: 13px;
+    font-weight: bold;
+    font-size: 120%;
+    color: #FEFEFE;
+}
+            
+#teamName {
+    text-align: center;
+    position: relative;
+    top: -50px;
+                
+}
+            
+#secondBar {
+    margin: -46px auto;
+    text-align: center;
+    font-weight: bold;
+    color: #FEFEFE;
+}
+            
+#secondBar>div div:nth-child(even) {
+    background-color: #59A028;
+    padding: 10px 0;
+    border: 1px solid white;
+}
+            
+#secondBar>div div:nth-child(odd) {
+    background-color: #7BC24A;
+    padding: 10px 0;
+    border: 1px solid white;
+}
+            
+#content {
+    margin-top: 80px;
+    text-align: center;
+}
+            
+.teamStats{
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+            
+.borderRight {
+    border-right: 1px solid black;
+}
+            
+hr {
+    background-color: black;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: auto;
+    text-decoration: none;
+}
+
+span {
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .navbar-expand-md {
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+    }
+}
+
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+}
+
+.navbar-brand {
+    display: inline-block;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
+
+.collapse {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .navbar-expand-md .navbar-collapse {
+        display: flex!important;
+        flex-basis: auto;
+    }
+}
+
+.navbar-collapse {
+    flex-basis: 100%;
+    flex-grow: 1;
+    align-items: center;
+}
+
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    color: inherit;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 0;
+    display: block;
+}
+
+.col-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+}
+
+
+.col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}

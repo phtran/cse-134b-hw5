@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Total page size: 153 kb | Total time: 2.21 s --> 
+        <!-- html file size: 6.3 kb | Time:  676 ms -->
+        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.07 s -->
+        <!-- util.js file size: 1.4 kb | Time: 757 ms -->
+        <!-- initializeThings.js file size: 296 b | Time: 743 ms -->
+        <!-- pageRedirection.js file size: 442 b | Time: 749 ms -->
+        <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
+        <title>Welcome to Soccer Tracker!</title>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <style type="text/css">
+            #topBarContent {
+                margin-left: 10px;
+                font-weight: bold;
+                color: #FEFEFE;
+            }
+            
+            #content {
+                margin-top: 80px;
+            }
+            
+            #signInForm {
+                margin-top: 20px;
+            }
+            
+            small {
+                text-align: right;
+            }
+            
+            button {
+                background-color: #6AB139;
+                color: #FEFEFE;
+                cursor: pointer;
+            }
+            
+            #errorMessage {
+                color: red;
+                display: none;
+            }
+            
+        </style>
+        
+        <script src="/js/util.js"></script>
+        <script src="/js/initializeThings.js"></script>
+        <script src="/js/pageRedirection.js"></script>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+             <nav class="navbar fixed-top navbar-light" style="background-color: #6AB139;">
+              <a class="navbar-brand" href="#">
+                <img src="/img/logo2.png" onclick="goToPage('/index.html')" style="cursor:pointer"  width="38" height="30" class="d-inline-block align-top" alt="">
+                  <span id="topBarContent">Soccer Tracker</span>
+              </a>
+             </nav>
+        </div>
+        <div id="content" class="container">
+             <h1>Welcome to Soccer Tracker!</h1>
+             <form id="signInForm">
+              <div class="form-group">
+                <label for="inputUsername">Username</label>
+                <input type="email" class="form-control" id="inputUsername" aria-describedby="emailHelp" placeholder="Your username">
+                <small id="emailHelp" class="form-text"><a href="#">Forgot username?</a></small>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder="Password">
+                <small id="passwordHelp" class="form-text"><a href="#">Forgot password?</a></small>
+              </div>  
+            </form>
+            <div id="errorMessage">
+                Username and Password entered do not match our records. Create a profile or log in using "admin" and "admin".
+                <br>
+                <br>
+            </div>
+            <div class="form-group" style="text-align:center;">
+                  <button onclick="validate()" class="btn">Log In</button>
+            </div>
+            <div class="form-group" style="text-align:center;">
+                  <button onclick="goToPage('/signup.html')" class="btn">Sign Up</button>
+            </div>
+        </div>
+        
+        <script>
+            function validate(){
+                var validated = false;
+                for (var i=0; i<users.length; i++){
+                    if (document.getElementById("inputUsername").value==users[i].username &&
+                       document.getElementById("inputPassword").value==users[i].pass){
+                        validated = true;
+                        currentUser = users[i];
+                        for (var j=0; j<teams.length; j++){
+                            if(currentUser.teamName == teams[j].teamName){
+                                currentTeam = teams[j];
+                            }
+                        }
+                        break;
+                    }
+                }
+                if (validated){
+                    goToPage('/homeScreen.html');
+                } else {
+                    document.getElementById("errorMessage").style.display = "block";
+                }
+            }
+        </script>
+    </body>
+</html>
