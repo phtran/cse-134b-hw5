@@ -45,7 +45,19 @@
             }
             
         </style>
-        
+        <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/initializeThings.js"></script>
         <script src="/js/pageRedirection.js"></script>
@@ -89,25 +101,28 @@
         
         <script>
             function validate(){
-                var validated = false;
-                for (var i=0; i<users.length; i++){
-                    if (document.getElementById("inputUsername").value==users[i].username &&
-                       document.getElementById("inputPassword").value==users[i].pass){
-                        validated = true;
-                        currentUser = users[i];
-                        for (var j=0; j<teams.length; j++){
-                            if(currentUser.teamName == teams[j].teamName){
-                                currentTeam = teams[j];
+                let email = document.getElementById("inputUsername").value;
+                let password = document.getElementById("inputPassword").value;
+                    firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then(() => {
+                        for (var i=0; i<users.length; i++){
+                            if (document.getElementById("inputUsername").value==users[i].username &&
+                            document.getElementById("inputPassword").value==users[i].pass){
+                                currentUser = users[i];
+                                for (var j=0; j<teams.length; j++){
+                                    if(currentUser.teamName == teams[j].teamName){
+                                        currentTeam = teams[j];
+                                    }
+                                }
+                                break;
                             }
-                        }
-                        break;
-                    }
-                }
-                if (validated){
-                    goToPage('/homeScreen.html');
-                } else {
-                    document.getElementById("errorMessage").style.display = "block";
-                }
+                        }                        
+                        goToPage('/homeScreen.html');
+                    })
+                    .catch(function(error) {
+                        document.getElementById("errorMessage").style.display = "block";
+                        document.getElementById("errorMessage").innerHTML = error.message;
+                    });
             }
         </script>
     </body>
