@@ -8,7 +8,7 @@
         <!-- pageRedirection.js file size: 470 b | Time: 626 ms -->
         <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
         <title>Edit Player Statistics</title>
-        <meta name="theme-color" content="#6AB139">
+        <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,7 +25,7 @@
                 margin-right: 13px;
                 font-weight: bold;
                 font-size: 120%;
-                color: #FEFEFE;
+                color: #FFFFFF;
             }
             
             #teamName {
@@ -39,22 +39,22 @@
                 margin: -46px auto;
                 text-align: center;
                 font-weight: bold;
-                color: #FEFEFE;
+                color: #FFFFFF;
             }
             
             #secondBar>div div:nth-child(3) {
-                background-color: #59A028;
+                background-color: #293E19;
                 padding: 10px 0;
                 border: 1px solid white;
             }
             
             #secondBar>div div {
-                background-color: #7BC24A;
+                background-color: #3E6124;
                 padding: 10px 0;
                 border: 1px solid white;
             }
             
-            #content {
+            #content, #content2 {
                 margin-top: 80px;
                 text-align: center;
                 margin-bottom: 30px;
@@ -102,8 +102,8 @@
             }
             
             button {
-                background-color: #6AB139;
-                color: #FEFEFE;
+                background-color: #365620;
+                color: #FFFFFF;
                 cursor: pointer;
             }
             
@@ -124,18 +124,18 @@
     </head>
 
     <body>        
-        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #6AB139;">
+        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #365620;">
               
             <img src="/img/logo2.png" onclick="goToPage('/homeScreen.html')" style="cursor:pointer" width="38" height="30" class="d-inline-block align-top" alt="">
             <div class="collapse navbar-collapse">
-                 <a class="navbar-brand" href="#">
+                 <a class="navbar-brand" href="/homeScreen.html">
                       <span class="topBarContent">Soccer Tracker</span>
                  </a>
             </div>
         </nav>
         
         <div class="container" id="teamName">
-            <h2 style="color: #FEFEFE;" id="teamNameValue"></h2>
+            <h2 style="color: #FFFFFF;" id="teamNameValue"></h2>
         </div>
         
         <div class="container-fluid" id="secondBar">
@@ -379,7 +379,7 @@
                 </table>
             </div>
         </div>
-        <div id="content" class="container">
+        <div id="content2" class="container">
               <button onclick="updatePlayers()" class="btn">Save</button>
         </div>
         <script>
@@ -389,17 +389,17 @@
             for (var i=0; i<currentTeam.players.length; i++){
                 myRoster += "<tr> <td class='zui-sticky-col' style='cursor:pointer'>"+currentTeam.players[i].fName +
                 " "+currentTeam.players[i].lName+"</td>";
-                myRoster += "<td><input type='number' id='number"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].number+"'></td>";
-                myRoster += "<td><input type='number' id='fouls"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].fouls+"'></td>";
-                myRoster += "<td><input type='number' id='redCards"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].redCards+"'></td>";
-                myRoster += "<td><input type='number' id='yellowCards"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].yellowCards+"'></td>";
-                myRoster += "<td><input type='number' id='shotsOnGoal"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].shotsOnGoal+"'></td>";
-                myRoster += "<td><input type='number' id='goals"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].goals+"'></td>";
-                myRoster += "<td><input type='number' id='assists"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].assists+"'></td>";
-                myRoster += "<td><input type='number' id='cornerKicks"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].cornerKicks+"'></td>";
-                myRoster += "<td><input type='number' id='penaltyKicks"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].penaltyKicks+"'></td>";
-                myRoster += "<td><input type='number' id='throwIn"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].throwIn+"'></td>";
-                myRoster += "<td><input type='number' id='appearances"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].appearances+"'></td></tr>";
+                myRoster += "<td><label for='number"+currentTeam.players[i].number+"'>.</label><input type='number' id='number"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].number+"'></td>";
+                myRoster += "<td><label for='fouls"+currentTeam.players[i].number+"'>.</label><input type='number' id='fouls"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].fouls+"'></td>";
+                myRoster += "<td><label for='redCards"+currentTeam.players[i].number+"'>.</label><input type='number' id='redCards"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].redCards+"'></td>";
+                myRoster += "<td><label for='yellowCards"+currentTeam.players[i].number+"'>.</label><input type='number' id='yellowCards"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].yellowCards+"'></td>";
+                myRoster += "<td><label for='shotsOnGoal"+currentTeam.players[i].number+"'>.</label><input type='number' id='shotsOnGoal"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].shotsOnGoal+"'></td>";
+                myRoster += "<td><label for='goals"+currentTeam.players[i].number+"'>.</label><input type='number' id='goals"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].goals+"'></td>";
+                myRoster += "<td><label for='assists"+currentTeam.players[i].number+"'>.</label><input type='number' id='assists"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].assists+"'></td>";
+                myRoster += "<td><label for='cornerKicks"+currentTeam.players[i].number+"'>.</label><input type='number' id='cornerKicks"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].cornerKicks+"'></td>";
+                myRoster += "<td><label for='penaltyKicks"+currentTeam.players[i].number+"'>.</label><input type='number' id='penaltyKicks"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].penaltyKicks+"'></td>";
+                myRoster += "<td><label for='throwIn"+currentTeam.players[i].number+"'>.</label><input type='number' id='throwIn"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].throwIn+"'></td>";
+                myRoster += "<td><label for='appearances"+currentTeam.players[i].number+"'>.</label><input type='number' id='appearances"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].appearances+"'></td></tr>";
             }
            
             
