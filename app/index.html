@@ -102,7 +102,26 @@
         </div>
         
         <script>
-            /*function validate(){
+            // Check if service workers are supported by user's browsers
+            if ('serviceWorker' in navigator) {
+              try {
+                if ('serviceWorker' in navigator) {
+                  window.addEventListener('load', () => {
+                    // Register the service worker passing our service worker code
+                    navigator.serviceWorker.register('/sw.js').then((registration) => {
+                      // Registration was successful
+                      console.log('ServiceWorker registration successful!', registration.scope);
+                    }, (err) => {
+                      console.log('ServiceWorker registration failed: ', err);
+                    });
+                  });
+                }
+              } catch (e) {
+                   console.log(e) // Probably want to use some free JS error tracking tool here like Sentry
+              }
+            }
+            
+            function validate(){
                 let email = document.getElementById("inputUsername").value;
                 let password = document.getElementById("inputPassword").value;
                     firebase.auth().signInWithEmailAndPassword(email, password)
@@ -126,57 +145,17 @@
                         // find a callback for the case that no login is matched
                         // set the current user in the session storage here
                         // then whenever 
-                        let ref = firebase.database().ref('users');
-                        ref.orderByChild('username').equalTo(email).on("child_added", function(snap) {
-                            currentUser = snap.val();
-                            goToPage('/homeScreen.html');
-                        })
+                        // let ref = firebase.database().ref('users');
+                        // ref.orderByChild('username').equalTo(email).on("child_added", function(snap) {
+                        //     currentUser = snap.val();
+                        //     goToPage('/homeScreen.html');
+                        // });
+                        goToPage('/homeScreen.html');
                     })
                     .catch(function(error) {
                         document.getElementById("errorMessage").style.display = "block";
                         document.getElementById("errorMessage").innerHTML = error.message;
                     });
-            }*/
-            
-            // Check if service workers are supported by user's browsers
-            if ('serviceWorker' in navigator) {
-              try {
-                if ('serviceWorker' in navigator) {
-                  window.addEventListener('load', () => {
-                    // Register the service worker passing our service worker code
-                    navigator.serviceWorker.register('/sw.js').then((registration) => {
-                      // Registration was successful
-                      console.log('ServiceWorker registration successful!', registration.scope);
-                    }, (err) => {
-                      console.log('ServiceWorker registration failed: ', err);
-                    });
-                  });
-                }
-              } catch (e) {
-                   console.log(e) // Probably want to use some free JS error tracking tool here like Sentry
-              }
-            }
-            
-            function validate(){
-                var validated = false;
-                for (var i=0; i<users.length; i++){
-                    if (document.getElementById("inputUsername").value==users[i].username &&
-                       document.getElementById("inputPassword").value==users[i].pass){
-                        validated = true;
-                        currentUser = users[i];
-                        for (var j=0; j<teams.length; j++){
-                            if(currentUser.teamName == teams[j].teamName){
-                                currentTeam = teams[j];
-                            }
-                        }
-                        break;
-                    }
-                }
-                if (validated){
-                    goToPage('/homeScreen.html');
-                } else {
-                    document.getElementById("errorMessage").style.display = "block";
-                }
             }
             
         </script>
