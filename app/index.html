@@ -105,19 +105,30 @@
                 let password = document.getElementById("inputPassword").value;
                     firebase.auth().signInWithEmailAndPassword(email, password)
                     .then(() => {
-                        for (var i=0; i<users.length; i++){
-                            if (document.getElementById("inputUsername").value==users[i].username &&
-                            document.getElementById("inputPassword").value==users[i].pass){
-                                currentUser = users[i];
-                                for (var j=0; j<teams.length; j++){
-                                    if(currentUser.teamName == teams[j].teamName){
-                                        currentTeam = teams[j];
-                                    }
-                                }
-                                break;
-                            }
-                        }                        
-                        goToPage('/homeScreen.html');
+                        // for (var i=0; i<users.length; i++){
+                        //     if (document.getElementById("inputUsername").value==users[i].username &&
+                        //     document.getElementById("inputPassword").value==users[i].pass){
+                        //         currentUser = users[i];
+                        //         console.log(currentUser);
+                        //         for (var j=0; j<teams.length; j++){
+                        //             if(currentUser.teamName == teams[j].teamName){
+                        //                 currentTeam = teams[j];
+                        //             }
+                        //         }
+                        //         break;
+                        //     }
+                        // }    
+                        // goToPage('/homeScreen.html');  
+
+                        // need to get the currentTeam info too
+                        // find a callback for the case that no login is matched
+                        // set the current user in the session storage here
+                        // then whenever 
+                        let ref = firebase.database().ref('users');
+                        ref.orderByChild('username').equalTo(email).on("child_added", function(snap) {
+                            currentUser = snap.val();
+                            goToPage('/homeScreen.html');
+                        })
                     })
                     .catch(function(error) {
                         document.getElementById("errorMessage").style.display = "block";

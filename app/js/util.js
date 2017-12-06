@@ -33,7 +33,6 @@ if (currentTeam){
     
 }
 
-
 var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
 function User (username, fName, lName, pass, type, teamName){

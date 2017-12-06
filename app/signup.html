@@ -144,7 +144,7 @@
                 }
                 
                 for (var i=0; i<users.length; i++){
-                    if (document.getElementById("inputUsername").value == users[i].username){
+                    if (document.getElementById("inputUsernameSignUp").value == users[i].username){
                         errorsText += "<li>Username already taken</li>";
                         validated = false;
                     }
@@ -191,14 +191,22 @@
                     let email = document.getElementById("inputUsernameSignUp").value;
                     let password = document.getElementById("inputPasswordSignUp").value;
                     firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then(() => {
-                        goToPage('/index.html');
-                    })
                     .catch(function(error) {
+                        console.log('blahdl;fmq;jna.jn');
                         var errorMessage = error.message;
                         document.getElementById("errorMessage").style.display = "block";
                         document.getElementById("errorMessage").innerHTML = errorMessage;
                     });
+                    // add user to firebase
+                    var dbref = firebase.database().ref().child('users');
+                    dbref.push({
+                        username: email,
+                        name: document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value,
+                        teamName: document.getElementById("inputTeamName").value,
+                        userPos: userType 
+                    });
+                    goToPage('/index.html');
+
                     addUser(document.getElementById("inputUsernameSignUp").value,
                             document.getElementById("inputFirstName").value,
                             document.getElementById("inputLastName").value,
@@ -210,7 +218,7 @@
                     errorsText += "</ul>";
                     document.getElementById("errorMessage").style.display = "block";
                     document.getElementById("errorMessage").innerHTML = errorsText;
-                    document.getElementById("inputPassword").value ="";
+                    document.getElementById("inputPasswordSignUp").value ="";
                     document.getElementById("inputPasswordC").value ="";
                     scrollTo(0,0);
                 }
