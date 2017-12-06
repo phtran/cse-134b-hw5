@@ -8,7 +8,7 @@
         <!-- pageRedirection.js file size: 497 b | Time: 691 ms -->
         <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
         <title>Edit Game Stats</title>
-        <meta name="theme-color" content="#6AB139">
+        <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,7 +25,7 @@
                 margin-right: 13px;
                 font-weight: bold;
                 font-size: 120%;
-                color: #FEFEFE;
+                color: #FFFFFF;
             }
             
             #teamName {
@@ -39,17 +39,17 @@
                 margin: -46px auto;
                 text-align: center;
                 font-weight: bold;
-                color: #FEFEFE;
+                color: #FFFFFF;
             }
             
             #secondBar>div div:nth-child(2) {
-                background-color: #59A028;
+                background-color: #293E19;
                 padding: 10px 0;
                 border: 1px solid white;
             }
             
             #secondBar>div div {
-                background-color: #7BC24A;
+                background-color: #3E6124;
                 padding: 10px 0;
                 border: 1px solid white;
             }
@@ -61,8 +61,8 @@
             }
             
             button {
-                background-color: #6AB139;
-                color: #FEFEFE;
+                background-color: #365620;
+                color: #FFFFFF;
                 cursor: pointer;
             }
             
@@ -82,18 +82,18 @@
     </head>
 
     <body>        
-        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #6AB139;">
+        <nav id="nav" class="navbar navbar-expand-md navbar-light" style="background-color: #365620;">
               
             <img src="/img/logo2.png" onclick="goToPage('/homeScreen.html')" style="cursor:pointer" width="38" height="30" class="d-inline-block align-top" alt="">
             <div class="collapse navbar-collapse">
-                 <a class="navbar-brand" href="#">
+                 <a class="navbar-brand" href="/homeScreen.html">
                       <span class="topBarContent">Soccer Tracker</span>
                  </a>
             </div>
         </nav>
         
         <div class="container" id="teamName">
-            <h2 style="color: #FEFEFE;" id="teamNameValue"></h2>
+            <h2 style="color: #FFFFFF;" id="teamNameValue"></h2>
         </div>
         
         <div class="container-fluid" id="secondBar">
@@ -244,64 +244,66 @@
             let match_name = "<h2>" + currentTeam.teamName + " vs. "  + curr_match.opponent + "</h2>";
             
             match_name += "<div id='errorMessage'></div>";
-            match_name += "<p><b style='font-size:200%''><input type='number' class ='editNumber' value='" + curr_match.stats.results0 + "' id='result0i'> : <input type='number' class='editNumber' value='" + curr_match.stats.results1 + "' id='result1i'></b></p><br>";
+            match_name += "<p><label for='result0i'>.</label><b style='font-size:200%''><input type='number' class ='editNumber' value='" + curr_match.stats.results0 + "' id='result0i'> : </b><label for='result1i'>.</label><b style='font-size:200%''><input type='number' class='editNumber' value='" + curr_match.stats.results1 + "' id='result1i'></b></p><br>";
 
-            let foul0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.foul0 + "' id='foul0i'>";
-            let foul1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.foul1 + "' id='foul1i'>";
+            let foul0 = "<label for='foul0i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.foul0 + "' id='foul0i'>";
+            let foul1 = "<label for='foul1i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.foul1 + "' id='foul1i'>";
             let b = calculateBlue(curr_match.stats.foul0, curr_match.stats.foul1);
-            let r = calculateRed(b);
+            let r = calculateRed(curr_match.stats.foul0, curr_match.stats.foul1);
             let foulp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
             foulp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
 
 
-            let red0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.redCards0 + "' id='red0i'>";
-            let red1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.redCards1 + "' id='red1i'>";
+            let red0 = "<label for='red0i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.redCards0 + "' id='red0i'>";
+            let red1 = "<label for='red1i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.redCards1 + "' id='red1i'>";
             b = calculateBlue(curr_match.stats.redCards0, curr_match.stats.redCards1);
-            r = calculateRed(b);
+            r = calculateRed(curr_match.stats.redCards0, curr_match.stats.redCards1);
             let redp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
             redp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
 
-            let yellow0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.yellowCards0 + "' id='yellow0i'>";
-            let yellow1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.yellowCards1 + "' id='yellow1i'>";
+            let yellow0 = "<label for='yellow0i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.yellowCards0 + "' id='yellow0i'>";
+            let yellow1 = "<label for='yellow1i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.yellowCards1 + "' id='yellow1i'>";
             b = calculateBlue(curr_match.stats.yellowCards0, curr_match.stats.yellowCards1);
-            r = calculateRed(b);
+            r = calculateRed(curr_match.stats.yellowCards0, curr_match.stats.yellowCards1);
             let yellowp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
             yellowp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
 
-            let shots0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.shotsOnGoal0 + "' id='shots0i'>";
-            let shots1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.shotsOnGoal1 + "' id='shots1i'>";
+            let shots0 = "<label for='shots0i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.shotsOnGoal0 + "' id='shots0i'>";
+            let shots1 = "<label for='shots1i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.shotsOnGoal1 + "' id='shots1i'>";
             b = calculateBlue(curr_match.stats.shotsOnGoal0, curr_match.stats.shotsOnGoal1);
-            r = calculateRed(b);
+            r = calculateRed(curr_match.stats.shotsOnGoal0, curr_match.stats.shotsOnGoal1);
             let shotsp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
             shotsp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
 
-            let goal0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.goals0 + "' id='goal0i'>";
-            let goal1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.goals1 + "' id='goal1i'>";
+            let goal0 = "<label for='goal0i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.goals0 + "' id='goal0i'>";
+            let goal1 = "<label for='goal1i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.goals1 + "' id='goal1i'>";
             b = calculateBlue(curr_match.stats.goals0, curr_match.stats.goals1);
-            r = calculateRed(b);
+            r = calculateRed(curr_match.stats.goals0, curr_match.stats.goals1);
             let goalp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
             goalp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
 
-            let corner0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.cornerKicks0 + "' id='corner0i'>";
-            let corner1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.cornerKicks1 + "' id='corner1i'>";
+            let corner0 = "<label for='corner0i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.cornerKicks0 + "' id='corner0i'>";
+            let corner1 = "<label for='corner1i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.cornerKicks1 + "' id='corner1i'>";
             b = calculateBlue(curr_match.stats.cornerKicks0, curr_match.stats.cornerKicks1);
-            r = calculateRed(b);
+            r = calculateRed(curr_match.stats.cornerKicks0, curr_match.stats.cornerKicks1);
             let cornerp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
             cornerp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
 
-            let kick0 = "<input type ='number' class='editNumber' value='" + curr_match.stats.goalKicks0 + "' id='kick0i'>";
-            let kick1 = "<input type ='number' class='editNumber' value='" + curr_match.stats.goalKicks1 + "' id='kick1i'>";
+            let kick0 = "<label for='kick0i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.goalKicks0 + "' id='kick0i'>";
+            let kick1 = "<label for='kick1i'>.</label><input type ='number' class='editNumber' value='" + curr_match.stats.goalKicks1 + "' id='kick1i'>";
             b = calculateBlue(curr_match.stats.goalKicks0, curr_match.stats.goalKicks1);
-            r = calculateRed(b);
+            r = calculateRed(curr_match.stats.goalKicks0, curr_match.stats.goalKicks1);
             let kickp = "<div class='progress-bar' role='progressbar' style='width: " + b + "%' aria-valuenow='" + b +"' aria-valuemin='0' aria-valuemax='100'></div>";
             kickp += "<div class='progress-bar bg-danger' role='progressbar' style='width: " + r + "%' aria-valuenow='" + r +"' aria-valuemin='0' aria-valuemax='100'></div>";
 
             function calculateBlue(x,y) {
+                if(x===0 && y===0) return 0;
                 return (x/(x+y)) * 100;
             }
 
-            function calculateRed(x) {
-                return 100 - x;
+            function calculateRed(x,y) {
+                if(x===0 && y===0) return 0;
+                return (y/(x+y)) * 100;
             }
 
             function updateGameStats() {
