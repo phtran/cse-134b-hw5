@@ -78,6 +78,18 @@
             }
                 
         </style>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
@@ -206,19 +218,55 @@
                         goalKicks1: 0
                     };
 
+                    var gameType;
+
                     if (document.getElementById("homeBox").checked) {
-                        currentTeam.addMatch(document.getElementById("inputTeam").value,
+                        gameType = "home";
+                        /*currentTeam.addMatch(document.getElementById("inputTeam").value,
                                              document.getElementById("inputDate").value,
                                              document.getElementById("inputLocation").value,
                                              "home",
-                                             stats);
+                                             stats);*/
                     } else {
-                        currentTeam.addMatch(document.getElementById("inputTeam").value,
+                        gameType = "away";
+                        /*currentTeam.addMatch(document.getElementById("inputTeam").value,
                                              document.getElementById("inputDate").value,
                                              document.getElementById("inputLocation").value,
                                              "away",
-                                             stats);
+                                             stats);*/
                     }
+
+                    currentTeam.addMatch(document.getElementById("inputTeam").value,
+                                        document.getElementById("inputDate").value,
+                                        document.getElementById("inputLocation").value,
+                                        gameType,
+                                        stats);
+
+                    /*var refstring = 'teams/' + currentTeam.teamName;
+                    var dref = firebase.database().ref(refstring).child('matches');
+                    
+                    dref.push({
+                        opponent: document.getElementById("inputTeam").value,
+                        date: document.getElementById("inputDate").value,
+                        location: document.getElementById("inputLocation").value,
+                        status: gameType,
+                        results0: 0,
+                        results1:  0,
+                        foul0: 0,
+                        foul1: 0,
+                        redCards0: 0,
+                        redCards1: 0,
+                        yellowCards0: 0,
+                        yellowCards1: 0,
+                        shotsOnGoal0: 0,
+                        shotsOnGoal1: 0,
+                        goals0: 0,
+                        goals1: 0,
+                        cornerKicks0: 0,
+                        cornerKicks1: 0,
+                        goalKicks0: 0,
+                        goalKicks1: 0
+                    });*/
         
                     goToPage('/viewGameSchedule.html');
                 } else {

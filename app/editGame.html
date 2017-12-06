@@ -222,11 +222,25 @@
                     currentTeam.currentMatch.date = Date.parse(new Date(document.getElementById("inputDate").value));
                     currentTeam.currentMatch.location = document.getElementById("inputLocation").value;
 
+                    var gameType;
+
                     if (document.getElementById("homeBox").checked) {
                         currentTeam.currentMatch.status = "home";
+                        gameType = "home";
                     } else {
                         currentTeam.currentMatch.status = "away";
+                        gameType = "away";
                     }
+
+                    /*var refstring = 'teams/' + currentTeam.teamName;
+                    var dref = firebase.database().ref(refstring).child('matches');
+
+                    dref.update({
+                        "opponent": document.getElementById("inputTeam").value,
+                        "date": document.getElementById("inputDate").value,
+                        "location": document.getElementById("inputLocation").value,
+                        "status": gameType
+                    });*/
                     
                     currentTeam.matches[i] = currentTeam.currentMatch;
 

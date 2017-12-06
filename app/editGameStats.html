@@ -379,6 +379,29 @@
                     }
                     currentTeam.matches[i].stats = myStats;
                     currentTeam.currentMatch.stats = myStats;
+
+                    /*var refstring = 'teams/' + currentTeam.teamName;
+                    var dref = firebase.database().ref(refstring).child('matches');
+
+                    dref.update({
+                        "results0": parseInt(document.getElementById("result0i").value),
+                        "results1": parseInt(document.getElementById("result1i").value),
+                        "foul0": parseInt(document.getElementById("foul0i").value),
+                        "foul1": parseInt(document.getElementById("foul1i").value),
+                        "redCards0": parseInt(document.getElementById("red0i").value),
+                        "redCards1": parseInt(document.getElementById("red1i").value),
+                        "yellowCards0": parseInt(document.getElementById("yellow0i").value),
+                        "yellowCards1": parseInt(document.getElementById("yellow1i").value),
+                        "shotsOnGoal0": parseInt(document.getElementById("shots0i").value),
+                        "shotsOnGoal1": parseInt(document.getElementById("shots1i").value),
+                        "goals0": parseInt(document.getElementById("goal0i").value),
+                        "goals1": parseInt(document.getElementById("goal1i").value),
+                        "cornerKicks0": parseInt(document.getElementById("corner0i").value),
+                        "cornerKicks1": parseInt(document.getElementById("corner1i").value),
+                        "goalKicks0": parseInt(document.getElementById("kick0i").value),
+                        "goalKicks1": parseInt(document.getElementById("kick1i").value)
+                    });*/
+
                     goToPage('/viewGameStats.html');
                 } else {
                     errorsText += "</ul>";

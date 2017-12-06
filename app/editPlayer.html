@@ -314,6 +314,18 @@
                     
                     currentTeam.players[i] = currentTeam.currentPlayer;
                     
+
+                    /*var refstring = 'teams/' + currentTeam.teamName;
+                    var dref = firebase.database().ref(refstring).child('players');
+
+                    dref.update({
+                        "fName": document.getElementById("inputFirstName").value,
+                        "lName": document.getElementById("inputLastName").value,
+                        "email": document.getElementById("inputEmail").value,
+                        "dBirth": document.getElementById("inputBirth").value,
+                        "number": document.getElementById("inputPosition").value,
+                        "isCaptain": document.getElementById("inputCaptain").checked)
+                    });*/
                     
                     goToPage('/viewPlayer.html');
                 } else {

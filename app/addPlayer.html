@@ -255,6 +255,29 @@
                                            document.getElementById("inputJersey").value,
                                            document.getElementById("inputPosition").value,
                                            document.getElementById("inputCaptain").checked);
+
+                    /*var refstring = 'teams/' + currentTeam.teamName;
+                    var dref = firebase.database().ref(refstring).child('players');
+
+                    dref.push({
+                        image: "/img/profile.png",
+                        fName: document.getElementById("inputFirstName").value,
+                        lName: document.getElementById("inputLastName").value,
+                        email: document.getElementById("inputEmail").value,
+                        dBirth: document.getElementById("inputBirth").value,
+                        number: document.getElementById("inputPosition").value,
+                        isCaptain: document.getElementById("inputCaptain").checked),
+                        fouls: 0;
+                        redCards: 0;
+                        yellowCards: 0;
+                        shotsOnGoal: 0;
+                        goals: 0;
+                        assists: 0;
+                        cornerKicks: 0;
+                        penaltyKicks: 0;
+                        throwIn: 0;
+                        appearances: 0;
+                    });*/
                     
                     goToPage('/statsPlayers.html');
                 } else {
