@@ -80,6 +80,55 @@ function writeTeamData(teamName) {
     });
 }
 
+function writeAMatch(id, teamName, opponent, date, location, status) {
+    firebase.database().ref('matches/' + teamName).push({
+        id: id,
+        opponent: opponent,
+        date: date,
+        location: location,
+        status: status,
+        results0: 0,
+        results1: 0,
+        foul0: 0,
+        foul1: 0,
+        redCards0: 0,
+        redCards1: 0,
+        yellowCards0: 0,
+        yellowCards1: 0,
+        shotsOnGoal0: 0,
+        shotsOnGoal1: 0,
+        goals0: 0,
+        goals1: 0,
+        cornerKicks0: 0,
+        cornerKicks1: 0,
+        goalKicks0: 0,
+        goalKicks1: 0
+    });
+}
+
+function writeAPlayer(fname, lname, email, birth, num, pos, captain) {
+    firebase.database().ref('matches/' + teamName).push({
+        fName: fname,
+        lName: lname,
+        email: email,
+        dBirth: birth,
+        number: num,
+        position: pos,
+        isCaptatin: captain,
+        fouls: 0,
+        redCards: 0,
+        yellowCards: 0,
+        shotsOnGoal: 0,
+        goals: 0,
+        assists: 0,
+        cornerKicks: 0,
+        penaltyKicks: 0,
+        throwIn: 0,
+        appearances: 0
+    });
+}
+
+function updateAMatch(id)
 
 function User (username, fName, lName, pass, type, teamName){
     this.username = username;
