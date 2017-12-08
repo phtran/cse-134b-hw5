@@ -1,38 +1,5 @@
 var currentPlayer = JSON.parse(sessionStorage.getItem("currentPlayer"));
 var currentMatch = JSON.parse(sessionStorage.getItem("currentMatch"));
-
-/*
-// Functions are not parsed so we have to define them again
-if (currentTeam){
-    currentTeam.addPlayer = function (image, fName, lName, email, dBirth, number, position, isCaptain){
-        this.players [this.players.length] = new Player (image, fName, lName, email, dBirth, number, position, isCaptain);
-    }
-    
-    currentTeam.deletePlayer = function (number){
-        for (var i=0; i<this.players.length; i++){
-            if (this.players[i].number == number){
-                this.players.splice(i,1);
-                break;
-            }
-        }
-    }
-    
-    currentTeam.addMatch = function (opponent, date, location, status, stats){
-        id = this.matches.length;
-        this.matches [this.matches.length] = new Match (id, opponent, date, location, status, stats);
-    }
-    
-    currentTeam.deleteMatch = function (id){
-        for (var i=0; i<this.matches.length; i++){
-            if (this.matches[i].id == id){
-                this.matches.splice(i,1);
-                break;
-            }
-        }
-    }
-    
-}*/
-
 var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
 console.log(currentUser);
@@ -49,24 +16,98 @@ function writeUserData(username, fName, lName, type, teamName) {
 }
 
 function writeTeamData(teamName) {
-    firebase.database().ref('matches/' + teamName).push({
-        id : 1,
-        opponent : "Bellota FC",
-        date : new Date(),
-        location : "San Diego",
-        status : "Home",
-        stats : null
-    });
     
-    firebase.database().ref('players/' + teamName).push({
-        //image = image;
-        fName : "Pablo",
-        lName : "Canas",
-        email : "pabloPlayer@gmail.com",
-        dBirth : new Date(),
-        number : 10,
-        position : "Forward",
-        isCaptain : true,
+    var stats = {
+        results0: 2,
+        results1:  1,
+        foul0: 1,
+        foul1: 2,
+        redCards0: 0,
+        redCards1: 1,
+        yellowCards0: 1,
+        yellowCards1: 2,
+        shotsOnGoal0: 3,
+        shotsOnGoal1: 1,
+        goals0: 2,
+        goals1: 1,
+        cornerKicks0: 1,
+        cornerKicks1: 2,
+        goalKicks0: 4,
+        goalKicks1: 8
+    };
+        
+    var stats2 = {
+        results0: 0,
+        results1:  0,
+        foul0: 0,
+        foul1: 0,
+        redCards0: 0,
+        redCards1: 0,
+        yellowCards0: 0,
+        yellowCards1: 0,
+        shotsOnGoal0: 0,
+        shotsOnGoal1: 0,
+        goals0: 0,
+        goals1: 0,
+        cornerKicks0: 0,
+        cornerKicks1: 0,
+        goalKicks0: 0,
+        goalKicks1: 0
+    };
+        
+    pushMatch (teamName, 0, "Machester", "December 29, 2017" ,"San Diego Petco Park", "home", stats2);                
+    pushMatch (teamName, 1, "FC Tijuana", "November 11, 2017" ,"San Diego Petco Park", "home", stats);       
+    pushMatch (teamName, 2, "La Bellota FC",  "December 8, 2017","San Diego Petco Park", "away", stats2);       
+    pushMatch (teamName, 3, "Real San Diego", "December 24, 2017" ,"San Diego Petco Park", "home", stats2);
+    pushMatch (teamName, 4, "Atletico de Balboa", "December 20, 2017" ,"San Diego Petco Park", "away", stats2);
+        
+    pushPlayer(teamName, "../img/profile.png", "Pablo", "Canas", "pablo@gmail.com", "1997-04-24", 1, "Forward", false);
+    pushPlayer(teamName, "../img/profile.png", "Peter", "Tran", "peter@gmail.com", "1997-04-24", 2, "Goalkeeper", false);
+    pushPlayer(teamName, "../img/profile.png", "Andrew", "Yoo", "andrew@gmail.com", "1997-04-24", 3, "Defender", false);
+    pushPlayer(teamName, "../img/profile.png", "Alex", "Smith", "alex@gmail.com", "1997-04-24", 4, "Midfielder", true);
+    pushPlayer(teamName, "../img/profile.png", "Tim", "Jobs", "tim@gmail.com", "1997-04-24", 5, "Forward", false);
+    pushPlayer(teamName, "../img/profile.png", "Robert", "John", "robert@gmail.com", "1997-04-24", 6, "Forward", false);
+    pushPlayer(teamName, "../img/profile.png", "Ralph", "Wiggum", "ralph@gmail.com", "1997-04-24", 9, "Midfielder", false);
+}
+
+function pushMatch (teamName, id, opponent, date, location, status, stats){
+    firebase.database().ref('matches/' + teamName+"/"+id).set({
+        id : id,
+        opponent : opponent,
+        date : date,
+        location : location,
+        status : status
+    });
+    firebase.database().ref('matches/' + teamName+"/stats/"+id).set({
+        results0: stats.results0,
+        results1:  stats.results1,
+        foul0: stats.foul0,
+        foul1: stats.foul1,
+        redCards0: stats.redCards0,
+        redCards1: stats.redCards1,
+        yellowCards0: stats.yellowCards0,
+        yellowCards1: stats.yellowCards1,
+        shotsOnGoal0: stats.shotsOnGoal0,
+        shotsOnGoal1: stats.shotsOnGoal1,
+        goals0: stats.goals0,
+        goals1: stats.goals1,
+        cornerKicks0: stats.cornerKicks0,
+        cornerKicks1: stats.cornerKicks1,
+        goalKicks0: stats.goalKicks0,
+        goalKicks1: stats.goalKicks1
+    });
+}
+
+function pushPlayer (teamName, image, fName, lName, email, dBirth, number, position, isCaptain){
+    firebase.database().ref('players/' + teamName+"/"+number).set({
+        image : image,
+        fName : fName,
+        lName : lName,
+        email : email,
+        dBirth : dBirth,
+        number : number,
+        position : position,
+        isCaptain : isCaptain,
         fouls : 0,
         redCards : 0,
         yellowCards : 0,
@@ -79,7 +120,6 @@ function writeTeamData(teamName) {
         appearances : 0
     });
 }
-
 
 function User (username, fName, lName, pass, type, teamName){
     this.username = username;

@@ -77,6 +77,20 @@
             }
             
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
@@ -240,8 +254,8 @@
         <script>
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
             
-            let curr_match = currentTeam.currentMatch;
-            let match_name = "<h2>" + currentTeam.teamName + " vs. "  + curr_match.opponent + "</h2>";
+            let curr_match = currentMatch;
+            let match_name = "<h2>" + currentUser.teamName + " vs. "  + curr_match.opponent + "</h2>";
             
             match_name += "<div id='errorMessage'></div>";
             match_name += "<p><label for='result0i'>.</label><b style='font-size:200%''><input type='number' class ='editNumber' value='" + curr_match.stats.results0 + "' id='result0i'> : </b><label for='result1i'>.</label><b style='font-size:200%''><input type='number' class='editNumber' value='" + curr_match.stats.results1 + "' id='result1i'></b></p><br>";
@@ -358,7 +372,6 @@
 
 
                 if (validated) {
-                    var i = curr_match.id;
                     var myStats = {
                         results0 : parseInt(document.getElementById("result0i").value),
                         results1 : parseInt(document.getElementById("result1i").value),
@@ -377,8 +390,9 @@
                         goalKicks0 : parseInt(document.getElementById("kick0i").value),
                         goalKicks1 : parseInt(document.getElementById("kick1i").value)
                     }
-                    currentTeam.matches[i].stats = myStats;
-                    currentTeam.currentMatch.stats = myStats;
+                    pushMatch (currentUser.teamName, currentMatch.id, currentMatch.opponent, currentMatch.date, currentMatch.location, 
+                               currentMatch.status, myStats);
+                    currentMatch.stats = myStats;
                     goToPage('/viewGameStats.html');
                 } else {
                     errorsText += "</ul>";

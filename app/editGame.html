@@ -78,6 +78,20 @@
             }
             
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
@@ -161,20 +175,20 @@
         </div>
         
         <script>
-            var myDate = new Date(currentTeam.currentMatch.date);
+            var myDate = new Date(currentMatch.date);
             myDate.setTime(myDate.getTime() + (8*60*60*1000));
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
-            document.getElementById("inputTeam").value = currentTeam.currentMatch.opponent;
+            document.getElementById("inputTeam").value = currentMatch.opponent;
             document.getElementById("inputDate").value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+
                                                         "-"+myDate.getDate();
-            document.getElementById("inputLocation").value = currentTeam.currentMatch.location;
+            document.getElementById("inputLocation").value = currentMatch.location;
 
-            if (currentTeam.currentMatch.status == "home") {
+            if (currentMatch.status == "home") {
                 document.getElementById("homeBox").checked = true;
                 document.getElementById("awayBox").checked = false;
             }
 
-            if (currentTeam.currentMatch.status == "away") {
+            if (currentMatch.status == "away") {
                 document.getElementById("homeBox").checked = false;
                 document.getElementById("awayBox").checked = true;
             }
@@ -210,27 +224,24 @@
 
                 if (validated) {
                     
-                    var aux;
-                    for (var i=0; i<currentTeam.matches.length; i++){
-                        if (currentTeam.matches[i].id == currentTeam.currentMatch.id){
-                            aux = i;
-                            break;
-                        }
-                    }
                     
-                    currentTeam.currentMatch.opponent = document.getElementById("inputTeam").value;
-                    currentTeam.currentMatch.date = Date.parse(new Date(document.getElementById("inputDate").value));
-                    currentTeam.currentMatch.location = document.getElementById("inputLocation").value;
+                    currentMatch.opponent = document.getElementById("inputTeam").value;
+                    currentMatch.date = document.getElementById("inputDate").value;
+                    currentMatch.location = document.getElementById("inputLocation").value;
 
                     if (document.getElementById("homeBox").checked) {
-                        currentTeam.currentMatch.status = "home";
+                        currentMatch.status = "home";
                     } else {
-                        currentTeam.currentMatch.status = "away";
+                        currentMatch.status = "away";
                     }
                     
-                    currentTeam.matches[i] = currentTeam.currentMatch;
-
+                    console.log(currentMatch.date);
+                    
+                    pushMatch (currentUser.teamName, currentMatch.id, currentMatch.opponent, currentMatch.date, currentMatch.location, 
+                               currentMatch.status, currentMatch.stats);
+                    
                     goToPage('/viewGameSchedule.html');
+
                 } else {
                     errorsText += "</ul>";
                     document.getElementById("errorMessage").style.display = "block";
@@ -240,8 +251,9 @@
             }
 
             function deleteGame() {
-                currentTeam.deleteMatch(currentTeam.currentMatch.id);
-                currentTeam.currentMatch = null;
+                firebase.database().ref('matches/' + currentUser.teamName+"/"+currentMatch.id).remove();
+                firebase.database().ref('matches/' + currentUser.teamName+"/stats/"+currentMatch.id).remove(); 
+                currentMatch = null;
                 goToPage('/viewGameSchedule.html')
             }
         </script>

@@ -128,6 +128,20 @@
             }
             
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
@@ -232,14 +246,14 @@
         </div>
         <script>
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
-            document.getElementById("profilePic").src = currentTeam.currentPlayer.image;
-            document.getElementById("inputFirstName").value = currentTeam.currentPlayer.fName;
-            document.getElementById("inputLastName").value = currentTeam.currentPlayer.lName;
-            document.getElementById("inputEmail").value = currentTeam.currentPlayer.email;
-            document.getElementById("inputBirth").value = currentTeam.currentPlayer.dBirth;
-            document.getElementById("inputJersey").value = currentTeam.currentPlayer.number;
-            document.getElementById("inputPosition").value = currentTeam.currentPlayer.position;
-            document.getElementById("inputCaptain").checked = currentTeam.currentPlayer.isCaptain;
+            document.getElementById("profilePic").src = currentPlayer.image;
+            document.getElementById("inputFirstName").value = currentPlayer.fName;
+            document.getElementById("inputLastName").value = currentPlayer.lName;
+            document.getElementById("inputEmail").value = currentPlayer.email;
+            document.getElementById("inputBirth").value = currentPlayer.dBirth;
+            document.getElementById("inputJersey").value = currentPlayer.number;
+            document.getElementById("inputPosition").value = currentPlayer.position;
+            document.getElementById("inputCaptain").checked = currentPlayer.isCaptain;
             
             function update (){
                 let validated = true;
@@ -260,15 +274,7 @@
                     errorsText += "<li>Last Name is required</li>";
                     validated = false;
                 }
-                
-                for (var i=0; i<currentTeam.players.length; i++){
-                    if (currentTeam.players[i].fName + currentTeam.players[i].lName == 
-                        document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value){
-                        errorsText += "<li>Full Name cannot be repeated</li>";
-                        validated = false;
-                        break;
-                    }
-                }
+                        
                 
                 if (!document.getElementById("inputEmail").value){
                     errorsText += "<li>Email is required</li>";
@@ -285,48 +291,67 @@
                     validated = false;
                 }
                 
-                for (var i=0; i<currentTeam.players.length; i++){
+               /* for (var i=0; i<currentTeam.players.length; i++){
                     if (currentTeam.players[i].number == document.getElementById("inputJersey").value && currentTeam.players[i].number != currentTeam.currentPlayer.number){
                         errorsText += "<li>Number is taken</li>";
-                        validated = false;
+                        this.validated = false;
                         break;
                     }
                 }
+                */
                 
-                if(validated){
-                    var aux;
-                    for (var i=0; i<currentTeam.players.length; i++){
-                        if (currentTeam.players[i].number == currentTeam.currentPlayer.number){
-                            aux = i;
-                            break;
-                        }
+                var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
+                playersRef.on('value', function(snapshot) {
+                    var players = snapshot.val();
+                    for (player in players) {
+                        var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
+                        playerRef.on('value', function(snapshot){
+                            var instance = snapshot.val();
+                            if (instance.fName + instance.lName == 
+                                document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value &&
+                               instance.fName + instance.lName != currentPlayer.fName+currentPlayer.lName){
+                                errorsText += "<li>Full Name cannot be repeated</li>";
+                                validated = false;
+                            }
+                            if (instance.number == document.getElementById("inputJersey").value && instance.number != currentPlayer.number){
+                                errorsText += "<li>Number is taken</li>";
+                                validated = false;
+                            }
+                        });
                     }
                     
-                    //currentTeam.currentPlayer.image = document.getElementById("inputFile").value;
-                    currentTeam.currentPlayer.fName = document.getElementById("inputFirstName").value;
-                    currentTeam.currentPlayer.lName = document.getElementById("inputLastName").value;
-                    currentTeam.currentPlayer.email = document.getElementById("inputEmail").value;
-                    currentTeam.currentPlayer.dBirth = document.getElementById("inputBirth").value;
-                    currentTeam.currentPlayer.number = document.getElementById("inputJersey").value;
-                    currentTeam.currentPlayer.position = document.getElementById("inputPosition").value;
-                    currentTeam.currentPlayer.isCaptain = document.getElementById("inputCaptain").checked;
-                    
-                    
-                    currentTeam.players[i] = currentTeam.currentPlayer;
-                    
-                    
-                    goToPage('/viewPlayer.html');
-                } else {
-                    errorsText += "</ul>";
-                    document.getElementById("errorMessage").style.display = "block";
-                    document.getElementById("errorMessage").innerHTML = errorsText;
-                    scrollTo(0,0);
-                }
+                    if(validated){
+                        var currPlayerNumb = currentPlayer.number;
+                        //currentPlayer.image = document.getElementById("inputFile").value;
+                        currentPlayer.fName = document.getElementById("inputFirstName").value;
+                        currentPlayer.lName = document.getElementById("inputLastName").value;
+                        currentPlayer.email = document.getElementById("inputEmail").value;
+                        currentPlayer.dBirth = document.getElementById("inputBirth").value;
+                        currentPlayer.number = document.getElementById("inputJersey").value;
+                        currentPlayer.position = document.getElementById("inputPosition").value;
+                        currentPlayer.isCaptain = document.getElementById("inputCaptain").checked;
+
+
+                        pushPlayer (currentUser.teamName, currentPlayer.image, currentPlayer.fName, currentPlayer.lName, currentPlayer.email,       currentPlayer.dBirth, currentPlayer.number, currentPlayer.position, currentPlayer.isCaptain);
+                        
+                        if (currPlayerNumb != currentPlayer.number){
+                            firebase.database().ref('players/' + currentUser.teamName+"/"+currPlayerNumb).remove();
+                        }
+
+
+                        goToPage('/viewPlayer.html');
+                    } else {
+                        errorsText += "</ul>";
+                        document.getElementById("errorMessage").style.display = "block";
+                        document.getElementById("errorMessage").innerHTML = errorsText;
+                        scrollTo(0,0);
+                    }
+                });
             }
             
             function deletePlayer () {
-                currentTeam.deletePlayer(currentTeam.currentPlayer.number);
-                currentTeam.currentPlayer = null;
+                firebase.database().ref('players/' + currentUser.teamName+"/"+currentPlayer.number).remove(); 
+                currentPlayer = null;
                 goToPage('/statsPlayers.html')
             }
         </script>

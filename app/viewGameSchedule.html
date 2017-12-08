@@ -74,39 +74,54 @@
                 padding-bottom:30px;
             }
             
-            #edit1, #edit2 {
+            .edit {
                 position: relative;
                 top: -25px;
             }
             
             @media only screen and (min-width: 1000px) {
-                #edit1, #edit2 {
+                .edit {
                     left: 250px;
                 }
             }
             @media only screen and (max-width: 1000px) {
-                #edit1, #edit2 {
+                .edit {
                     left: 200px;
                 }
             }
             @media only screen and (max-width: 750px) {
-                #edit1, #edit2 {
+                .edit {
                     left: 150px;
                 }
             }
             @media only screen and (max-width: 625px) {
-                #edit1, #edit2 {
+                .edit {
                     left: 130px;
                 }
             }
             @media only screen and (max-width: 500px) {
-                #edit1, #edit2 {
+                .edit {
                     left: 100px;
                 }
             }
             
             
+            
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
     </head>
@@ -144,48 +159,172 @@
         </div>
         
         <div id="content" class="container">
-              <div id="game0" class="game" style="cursor:pointer" onclick="prevGameStats()">
-                 <h2>Previous Game</h2>
-                 <div id="prevGame">
-                 <p><em id="prevReplace">10/15 Sun 8:00 pm</em> </p>
-                 <p id="prevMatchLocation">San Diego Petco Park</p>
-                 <p id="prevMatchup">Team Woo vs FC Tijuana</p>
-                 <p><b style="font-size:200%" id="prevScore">2 : 1</b></p>
-                 <p id="prevHomeAway">Home game</p>
-                 </div>
-              </div>
-              <hr>  
-              
-              <div id="game1" class="game">
-                  <img id="edit1" src="/img/edit.png" onclick="editToday();" style="cursor:pointer" alt="edit" height="25" width="25">
-                  <h2>Today's Game</h2>
-                  <div id="todayGame">
-                    <p> <em id="todayReplace">10/15 Sun 8:00 pm</em> <img style="margin-left: 20px;" src="/img/calendar.png" alt="calendar" height="25" width="25"></p>
-                    <p id="todayMatchLocation">San Diego Petco Park</p>
-                    <p id="todayMatchup">Team Woo vs Real San Diego</p>
-                    <p id="todayHomeAway">Home game</p>                    
+             <div id ="games">
+                  <div id="game0" class="game" style="cursor:pointer" onclick="prevGameStats()">
+                     <h2>Previous Game</h2>
+                     <div id="prevGame">
+                     <p><em id="prevReplace">10/15 Sun 8:00 pm</em> </p>
+                     <p id="prevMatchLocation">San Diego Petco Park</p>
+                     <p id="prevMatchup">Team Woo vs FC Tijuana</p>
+                     <p><b style="font-size:200%" id="prevScore">2 : 1</b></p>
+                     <p id="prevHomeAway">Home game</p>
+                     </div>
                   </div>
-                  
-              </div>
-              <hr>
-              <div id="game2" class="game">
-                  <img id="edit2" src="/img/edit.png" onclick="editNext();" style="cursor:pointer" alt="edit" height="25" width="25">
-                  <h2>Next Upcoming Game</h2>
-                  <div id="nextGame">
-                  <p><em id="nextReplace">10/15 Sun 8:00 pm</em></p>
-                  <p id="nextMatchLocation">San Diego Petco Park</p>
-                  <p id="nextMatchup">Team Woo vs Atletico de Balboa</p>
-                  <p id="nextHomeAway">Away game</p>
+                  <hr>  
+
+                  <div id="game1" class="game">
+                      <img id="edit1" src="/img/edit.png" onclick="editToday();" style="cursor:pointer" alt="edit" height="25" width="25">
+                      <h2>Today's Game</h2>
+                      <div id="todayGame">
+                        <p> <em id="todayReplace">10/15 Sun 8:00 pm</em> <img style="margin-left: 20px;" src="/img/calendar.png" alt="calendar" height="25" width="25"></p>
+                        <p id="todayMatchLocation">San Diego Petco Park</p>
+                        <p id="todayMatchup">Team Woo vs Real San Diego</p>
+                        <p id="todayHomeAway">Home game</p>                    
+                      </div>
+
+                  </div>
+                  <hr>
+                  <div id="game2" class="game">
+                      <img id="edit2" src="/img/edit.png" onclick="editNext();" style="cursor:pointer" alt="edit" height="25" width="25">
+                      <h2>Next Upcoming Game</h2>
+                      <div id="nextGame">
+                      <p><em id="nextReplace">10/15 Sun 8:00 pm</em></p>
+                      <p id="nextMatchLocation">San Diego Petco Park</p>
+                      <p id="nextMatchup">Team Woo vs Atletico de Balboa</p>
+                      <p id="nextHomeAway">Away game</p>
+                      </div>
                   </div>
               </div>
-              
         </div>
         
         <script>
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
             var monthNames = ["January", "February", "March","April", "May", "June", "July",
                               "August", "September", "October","November", "December"];
-
+            
+            var matchesRef = firebase.database().ref('matches/' + currentUser.teamName);                     
+            matchesRef.on('value', function(snapshot) {
+                var matches = snapshot.val();
+                var matchesList ="";
+                let realTimeDate = new Date(Date.now());
+                
+                // Previous
+                var prevFound = false;
+                for (match in matches) {
+                    if(match!="stats"){
+                        var matchRef = firebase.database().ref('matches/' + currentUser.teamName + "/"+match);
+                        matchRef.on('value', function(snapshot){
+                            var instance = snapshot.val(); 
+                            var matchDate = new Date(Date.parse(instance.date));
+                            matchDate.setTime(matchDate.getTime() + (8*60*60*1000));
+                            if ((matchDate.getFullYear() === realTimeDate.getFullYear() && matchDate.getMonth() === realTimeDate.getMonth() &&   
+                                matchDate.getDate() < realTimeDate.getDate()) ||
+                               (matchDate.getFullYear() === realTimeDate.getFullYear() && matchDate.getMonth() < realTimeDate.getMonth()) ||
+                               (matchDate.getFullYear() < realTimeDate.getFullYear())) {
+                                    prevFound = true;
+                                    matchesList += '<div class="game" style="cursor:pointer" onclick="selectMatch('+instance.id+')">';
+                                    matchesList += '<h2>Previous Game</h2>';
+                                    matchesList += '<p>'+instance.date+'</p>';
+                                    matchesList += '<p>'+instance.location+'</p>';
+                                    matchesList += '<p>'+currentUser.teamName+' vs '+instance.opponent+'</p>';
+                                    var statsRef =firebase.database().ref('matches/'+currentUser.teamName+'/stats/'+instance.id);
+                                    statsRef.on('value', function(snapshot){
+                                        var myStat = snapshot.val(); 
+                                        matchesList += '<p><b style="font-size:200%">'+myStat.results0+' : '+myStat.results1+'</b></p>';
+                                        
+                                    });
+                                    matchesList += ' <p>'+instance.status[0].toUpperCase() + instance.status.substring(1)+' game</p>';
+                                    matchesList += '</div>';
+                                    matchesList += '<br>';
+                              }
+                        });
+                    }
+                }
+                if (!prevFound){
+                    matchesList += '<div class="game">';
+                    matchesList += "<h2>Previous Game</h2>";
+                    matchesList += '<p>No previous games!</p>';
+                    matchesList += '</div>';
+                    matchesList += '<br>';
+                }
+                
+                matchesList += '<hr>';
+                
+                
+                // Today
+                var todayFound = false;
+                for (match in matches) {
+                    if(match!="stats"){
+                        var matchRef = firebase.database().ref('matches/' + currentUser.teamName + "/"+match);
+                        matchRef.on('value', function(snapshot){
+                            var instance = snapshot.val(); 
+                            var matchDate = new Date(Date.parse(instance.date));
+                            matchDate.setTime(matchDate.getTime() + (8*60*60*1000));
+                            if ((matchDate.getFullYear() === realTimeDate.getFullYear() && matchDate.getMonth() === realTimeDate.getMonth() &&   
+                                matchDate.getDate() === realTimeDate.getDate())) {
+                                    todayFound = true;
+                                    matchesList += '<div class="game">';
+                                    matchesList += '<img class="edit" src="/img/edit.png" onclick="selectMatch('+instance.id+')" style="cursor:pointer" alt="edit" height="25" width="25">';
+                                    matchesList += "<h2>Today's Game</h2>";
+                                    matchesList += '<p>'+instance.date+'<img style="margin-left: 20px;" src="/img/calendar.png" alt="calendar" height="25" width="25"></p>';
+                                    matchesList += '<p>'+instance.location+'</p>';
+                                    matchesList += '<p>'+currentUser.teamName+' vs '+instance.opponent+'</p>';
+                                    matchesList += ' <p>'+instance.status[0].toUpperCase() + instance.status.substring(1)+' game</p>';
+                                    matchesList += '</div>';
+                                    matchesList += '<br>';
+                              }
+                        });
+                    }
+                }
+                if (!todayFound){
+                    matchesList += '<div class="game">';
+                    matchesList += "<h2>Today's Game</h2>";
+                    matchesList += '<p>No matches today! :(</p>';
+                    matchesList += '</div>';
+                    matchesList += '<br>';
+                }
+                
+                matchesList += '<hr>';
+                
+                
+                // Upcoming
+                var upcFound = false;
+                for (match in matches) {
+                    if(match!="stats"){
+                        var matchRef = firebase.database().ref('matches/' + currentUser.teamName + "/"+match);
+                        matchRef.on('value', function(snapshot){
+                            var instance = snapshot.val(); 
+                            var matchDate = new Date(Date.parse(instance.date));
+                            matchDate.setTime(matchDate.getTime() + (8*60*60*1000));
+                            if ((matchDate.getFullYear() === realTimeDate.getFullYear() && matchDate.getMonth() === realTimeDate.getMonth() &&   
+                                matchDate.getDate() > realTimeDate.getDate()) ||
+                               (matchDate.getFullYear() === realTimeDate.getFullYear() && matchDate.getMonth() > realTimeDate.getMonth()) ||
+                               (matchDate.getFullYear() > realTimeDate.getFullYear())) {
+                                    upcFound = true;
+                                    matchesList += '<div class="game">';
+                                    matchesList += '<img class="edit" src="/img/edit.png" onclick="selectMatch('+instance.id+')" style="cursor:pointer" alt="edit" height="25" width="25">';
+                                    matchesList += "<h2>Upcoming Game</h2>";
+                                    matchesList += '<p>'+instance.date+'<img style="margin-left: 20px;" src="/img/calendar.png" alt="calendar" height="25" width="25"></p>';
+                                    matchesList += '<p>'+instance.location+'</p>';
+                                    matchesList += '<p>'+currentUser.teamName+' vs '+instance.opponent+'</p>';
+                                    matchesList += ' <p>'+instance.status[0].toUpperCase() + instance.status.substring(1)+' game</p>';
+                                    matchesList += '</div>';
+                                    matchesList += '<br>';
+                              }
+                        });
+                    }
+                }
+                if (!upcFound){
+                    matchesList += '<div class="game">';
+                    matchesList += '<h2>Upcoming Game</h2>';
+                    matchesList += '<p>No upcoming games!</p>';
+                    matchesList += '</div>';
+                    matchesList += '<br>';
+                }
+                                
+                document.getElementById("games").innerHTML = matchesList;
+           });
+            /*
             var prevFound = false;
             var matchPrev;
             let prevDate = new Date(Date.now());
@@ -219,8 +358,7 @@
                 document.getElementById("prevMatchLocation").innerHTML = matchPrev.location;
                 document.getElementById("prevMatchup").innerHTML = currentTeam.teamName + " vs " + matchPrev.opponent;
                 document.getElementById("prevScore").innerHTML = matchPrev.stats.results0 + " : " + matchPrev.stats.results1;
-                document.getElementById("prevHomeAway").innerHTML = matchPrev.status[0].toUpperCase() + matchPrev.status.substring(1) + ' game';
-                currentTeam.currentMatch = matchPrev;
+                document.getElementById("prevHomeAway").innerHTML = matchPrev.status[0].toUpperCase() + matchPrev.status.substring(1) + ' game'; 
             }
 
             // today game
@@ -244,8 +382,7 @@
                                                                 realTimeDate.getDate() + ', ' + realTimeDate.getFullYear();
                 document.getElementById("todayMatchLocation").innerHTML = todayMatch.location;
                 document.getElementById("todayMatchup").innerHTML = currentTeam.teamName + " vs " + todayMatch.opponent;
-                document.getElementById("todayHomeAway").innerHTML = todayMatch.status[0].toUpperCase() + todayMatch.status.substring(1) + ' game';
-                currentTeam.currentMatch = todayMatch;
+                document.getElementById("todayHomeAway").innerHTML = todayMatch.status[0].toUpperCase() + todayMatch.status.substring(1) + ' game'; 
             }
 
             // next game
@@ -278,22 +415,35 @@
                                                                     matchNextDate.getDate() + ', ' + matchNextDate.getFullYear();
                 document.getElementById("nextMatchLocation").innerHTML = matchNext.location;
                 document.getElementById("nextMatchup").innerHTML = currentTeam.teamName + " vs " + matchNext.opponent;
-                document.getElementById("nextHomeAway").innerHTML = matchNext.status[0].toUpperCase() + matchNext.status.substring(1) + ' game';
-                currentTeam.currentMatch = matchNext;
+                document.getElementById("nextHomeAway").innerHTML = matchNext.status[0].toUpperCase() + matchNext.status.substring(1) + ' game'; 
             }
-
-            function prevGameStats() {
-                currentTeam.currentMatch = matchPrev;
+*/          
+            function selectMatch (gameId){
+                var matchRef = firebase.database().ref('matches/' + currentUser.teamName + "/"+gameId);
+                    matchRef.on('value', function(snapshot){
+                        var instance = snapshot.val(); 
+                        currentMatch = instance;
+                        var statsRef =firebase.database().ref('matches/'+currentUser.teamName+'/stats/'+instance.id);
+                        statsRef.on('value', function(snapshot){
+                            var myStat = snapshot.val(); 
+                            currentMatch.stats = myStat;           
+                        });
+                        goToPage('/editGame.html');
+                });  
+            }
+            
+            /*function prevGameStats() {
+                currentMatch = matchPrev;
                 goToPage('/viewGameStats.html')
             }
             function editToday() {
-                currentTeam.currentMatch = todayMatch;
+                currentMatch = todayMatch;
                 goToPage('/editGame.html')
             }            
             function editNext() {
-                currentTeam.currentMatch = matchNext;
+                currentMatch = matchNext;
                 goToPage('/editGame.html')
-            }
+            }*/
         </script>
     </body>
 </html>

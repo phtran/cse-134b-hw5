@@ -134,6 +134,20 @@
             }
 
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
     </head>
@@ -398,34 +412,41 @@
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
             
             let myRoster= "";
-            for (var i=0; i<currentTeam.players.length; i++){
-                myRoster += "<tr> <td class='zui-sticky-col' onclick='getPlayer("+currentTeam.players[i].number+")'             style='cursor:pointer'>"+currentTeam.players[i].fName +
-                " "+currentTeam.players[i].lName+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].number+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].fouls+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].redCards+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].yellowCards+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].shotsOnGoal+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].goals+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].assists+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].cornerKicks+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].penaltyKicks+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].throwIn+"</td>";
-                myRoster += "<td>"+currentTeam.players[i].appearances+"</td></tr>";
-            }
+            
+            var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
+            playersRef.on('value', function(snapshot) {
+                var players = snapshot.val();
+                for (player in players) {
+                    var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
+                    playerRef.on('value', function(snapshot){
+                        var instance = snapshot.val();
+                        myRoster += "<tr> <td class='zui-sticky-col' onclick='getPlayer("+instance.number+")'             style='cursor:pointer'>"+instance.fName +
+                        " "+instance.lName+"</td>";
+                        myRoster += "<td>"+instance.number+"</td>";
+                        myRoster += "<td>"+instance.fouls+"</td>";
+                        myRoster += "<td>"+instance.redCards+"</td>";
+                        myRoster += "<td>"+instance.yellowCards+"</td>";
+                        myRoster += "<td>"+instance.shotsOnGoal+"</td>";
+                        myRoster += "<td>"+instance.goals+"</td>";
+                        myRoster += "<td>"+instance.assists+"</td>";
+                        myRoster += "<td>"+instance.cornerKicks+"</td>";
+                        myRoster += "<td>"+instance.penaltyKicks+"</td>";
+                        myRoster += "<td>"+instance.throwIn+"</td>";
+                        myRoster += "<td>"+instance.appearances+"</td></tr>";
+                    });
+                }
+                document.getElementById("teamRoster").innerHTML = myRoster;
+           });
             
             function getPlayer (jNumber){
-                for (var i=0; i<currentTeam.players.length; i++){
-                    if (currentTeam.players[i].number == jNumber){
-                        currentTeam.currentPlayer = currentTeam.players[i];
-                        break;
-                    }
-                }
-                
-                goToPage('/viewPlayer.html');
+                var playerRef = firebase.database().ref('players/' + currentUser.teamName+"/"+jNumber);                     
+                playerRef.on('value', function(snapshot) {
+                    var instance = snapshot.val();
+                    currentPlayer = instance; 
+                    goToPage('/viewPlayer.html');
+                });
             }
             
-            document.getElementById("teamRoster").innerHTML = myRoster;
         </script>
     </body>
 </html>

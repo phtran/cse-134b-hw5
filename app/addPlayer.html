@@ -61,12 +61,15 @@
             }
             
             #insertImage {
-                max-width: 150px;
-                max-height: 150px;
+                text-align: center;
+                width: 150px;
+                height: 150px;
                 border-radius: 50%;
-                background-color: lightblue;
-                line-height: 150px;
-                color: white;
+                background-color: #9DFF89; 
+                color: #000000;
+                cursor: pointer;
+                line-height: 130px;
+                cursor: pointer;
             }
             
             #addPlayerForm {
@@ -84,6 +87,10 @@
                     position: relative;
                     left: 40%;
                 }
+                #insertImage{
+                    position: relative;
+                    left:33%;
+                }
             }
             
             #errorMessage {
@@ -93,6 +100,20 @@
             }
             
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
@@ -134,10 +155,10 @@
               <div id="errorMessage"></div>
               <form id="addPlayerForm">
               
-              <div class="form-group row justify-content-sm-center">
-                    <label for="inputFile" class="col-sm-2 col-form-label" id="insertImage" style="background-color: #9DFF89; color: #000000;">Insert an image</label>
-                    <div class="col-sm-5">
-                        <input type="file" class="form-control-file" id="inputFile">
+              <div class="form-group row justify-content-sm-center" >
+                    <label for="inputFile" class="col-form-label" id="insertImage">Insert an image</label>
+                    <div class="col-sm-5" style="display:none;">
+                        <input type="file" class="form-control-file" id="inputFile" >
                     </div>
               </div>
               <div class="form-group row justify-content-sm-center">
@@ -211,15 +232,7 @@
                     errorsText += "<li>Last Name is required</li>";
                     validated = false;
                 }
-                
-                for (var i=0; i<currentTeam.players.length; i++){
-                    if (currentTeam.players[i].fName + currentTeam.players[i].lName == 
-                        document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value){
-                        errorsText += "<li>Full Name cannot be repeated</li>";
-                        validated = false;
-                        break;
-                    }
-                }
+               
                 
                 if (!document.getElementById("inputEmail").value){
                     errorsText += "<li>Email is required</li>";
@@ -236,34 +249,42 @@
                     validated = false;
                 }
                 
-                for (var i=0; i<currentTeam.players.length; i++){
-                    if (currentTeam.players[i].number == document.getElementById("inputJersey").value){
-                        errorsText += "<li>Number is taken</li>";
-                        validated = false;
-                        break;
+                 
+                var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
+                playersRef.on('value', function(snapshot) {
+                    var players = snapshot.val();
+                    for (player in players) {
+                        var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
+                        playerRef.on('value', function(snapshot){
+                            var instance = snapshot.val();
+                            if (instance.fName + instance.lName == 
+                                document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value){
+                                errorsText += "<li>Full Name cannot be repeated</li>";
+                                validated = false;
+                            }
+                            if (instance.number == document.getElementById("inputJersey").value){
+                                errorsText += "<li>Number is taken</li>";
+                                validated = false;
+                            }
+                        });
                     }
-                }
                 
                 
-                if (validated) {
-                    // For the moment, cannot save images, so just put a standard one
-                    currentTeam.addPlayer ("/img/profile.png",
-                                           document.getElementById("inputFirstName").value,
-                                           document.getElementById("inputLastName").value,
-                                           document.getElementById("inputEmail").value,
-                                           document.getElementById("inputBirth").value,
-                                           document.getElementById("inputJersey").value,
-                                           document.getElementById("inputPosition").value,
-                                           document.getElementById("inputCaptain").checked);
-                    
-                    goToPage('/statsPlayers.html');
-                } else {
-                    errorsText += "</ul>";
-                    document.getElementById("errorMessage").style.display = "block";
-                    document.getElementById("errorMessage").innerHTML = errorsText;
-                    scrollTo(0,0);
-                }
-                
+                    if (validated) {
+                        // For the moment, cannot save images, so just put a standard one
+                        pushPlayer (currentUser.teamName, "/img/profile.png", document.getElementById("inputFirstName").value, 
+                                    document.getElementById("inputLastName").value, document.getElementById("inputEmail").value, 
+                                    document.getElementById("inputBirth").value, document.getElementById("inputJersey").value,
+                                    document.getElementById("inputPosition").value, document.getElementById("inputCaptain").checked);
+
+                        goToPage('/statsPlayers.html');
+                    } else {
+                        errorsText += "</ul>";
+                        document.getElementById("errorMessage").style.display = "block";
+                        document.getElementById("errorMessage").innerHTML = errorsText;
+                        scrollTo(0,0);
+                    }
+                });
             }
             
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;

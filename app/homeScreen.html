@@ -83,6 +83,20 @@
             
             
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
@@ -161,68 +175,87 @@
             
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
 
-            let numLosses = 0;
-            let numTies = 0;
-            let numWins = 0;
-            let totalGoalScored = 0;
-            let totalGoalsAgainst = 0;
+            this.numLosses = 0;
+            this.numTies = 0;
+            this.numWins = 0;
+            this.totalGoalScored = 0;
+            this.totalGoalsAgainst = 0;
             
-            
-            for (var i=0; i<currentTeam.matches.length; i++){
-                let isUsed = false;
-                for (element in currentTeam.matches[i].stats){
-                    if (currentTeam.matches[i].stats[element] != 0){
-                        isUsed = true;
-                        break;
-                    }
-                }
-                if (isUsed){
-                    
-                    totalGoalScored += parseInt(currentTeam.matches[i].stats.results0);
-                    totalGoalsAgainst += parseInt(currentTeam.matches[i].stats.results1);
-                    if (currentTeam.matches[i].stats.results0 < currentTeam.matches[i].stats.results1) {
-                      numLosses++;
-                    }
-                    else if (currentTeam.matches[i].stats.results0 > currentTeam.matches[i].stats.results1) {
-                      numWins++;
-                    }
-                    else {
-                      numTies++;
-                    }
-                }
-            }
-            document.getElementById("teamWins").innerHTML = numWins;
-            document.getElementById("teamLosses").innerHTML = numLosses;
-            document.getElementById("teamTies").innerHTML = numTies;
-            document.getElementById("goalScored").innerHTML = totalGoalScored;
-            document.getElementById("goalAgainst").innerHTML = totalGoalsAgainst;
-
-            var opponent;
-            var matchLocation;
+            //var this.matchLocation;
             let realTimeDate = new Date(Date.now());
             var monthNames = ["January", "February", "March","April", "May", "June", "July",
                               "August", "September", "October","November", "December"];
+            
+            var matchesRef = firebase.database().ref('matches/' + currentUser.teamName);                     
+            matchesRef.on('value', function(snapshot) {
+                var matches = snapshot.val();
+                for (match in matches) {
+                    if(match!="stats"){
+                        var matchRef = firebase.database().ref('matches/' + currentUser.teamName + "/"+match);
+                        matchRef.on('value', function(snapshot){
+                            var instance = snapshot.val();
+                            
+                            var currentMatchDate = new Date(Date.parse(instance.date));
+                             currentMatchDate.setTime(currentMatchDate.getTime() + (8*60*60*1000));
+                             if (currentMatchDate.getFullYear() === realTimeDate.getFullYear() &&
+                                 currentMatchDate.getMonth() === realTimeDate.getMonth() && 
+                                 currentMatchDate.getDate() === realTimeDate.getDate()) {
+                                    this.matchLocation = instance.location;
+                                    this.opponent = instance.opponent;
+                              }
+                        });
+                    }
+                }
 
-            currentTeam.matches.forEach( (match) => {
-              let currentMatchDate = new Date(match.date);
-              currentMatchDate.setTime(currentMatchDate.getTime() + (8*60*60*1000));
-              if (currentMatchDate.getFullYear() === realTimeDate.getFullYear() &&
-                  currentMatchDate.getMonth() === realTimeDate.getMonth() && 
-                  currentMatchDate.getDate() === realTimeDate.getDate()) {
-                    matchLocation = match.location;
-                    opponent = match.opponent;
-              }
+                if (this.matchLocation === undefined) {
+                  document.getElementById("matchDetails").innerHTML = "No matches today! :(";
+                }
+                else {
+                    document.getElementById("toReplace").innerHTML = monthNames[realTimeDate.getMonth()] + ' ' +
+                                                                    realTimeDate.getDate() + ', ' + realTimeDate.getFullYear();
+                    document.getElementById("matchLocation").innerHTML = this.matchLocation;
+                    document.getElementById("matchup").innerHTML = currentUser.teamName + " vs " + this.opponent;
+                }
+           });
+            
+            
+            var statsRef = firebase.database().ref('matches/' + currentUser.teamName + "/stats");
+            statsRef.on('value', function(snapshot){
+                var stats = snapshot.val();
+                for (stat in stats){
+                    var statRef = firebase.database().ref('matches/' + currentUser.teamName + "/stats/"+stat);
+                    statRef.on('value', function(snapshot){
+                        var instance = snapshot.val();
+                        let isUsed = false;
+                        for (element in instance){
+                            if (instance[element] != 0){
+                                isUsed = true;
+                                break;
+                            }
+                        }
+                        if (isUsed){
+                            this.totalGoalScored += parseInt(instance.results0);
+                            this.totalGoalsAgainst += parseInt(instance.results1);
+                            if (instance.results0 < instance.results1) {
+                              this.numLosses++;
+                            }
+                            else if (instance.results0 > instance.results1) {
+                              this.numWins++;
+                            }
+                            else {
+                              this.numTies++;
+                            }
+                        }
+                    });
+                }
+                document.getElementById("teamWins").innerHTML = this.numWins;
+                document.getElementById("teamLosses").innerHTML = this.numLosses;
+                document.getElementById("teamTies").innerHTML = this.numTies;
+                document.getElementById("goalScored").innerHTML = this.totalGoalScored;
+                document.getElementById("goalAgainst").innerHTML = this.totalGoalsAgainst;
             });
-
-            if (matchLocation === undefined) {
-              document.getElementById("matchDetails").innerHTML = "No matches today! :(";
-            }
-            else {
-                document.getElementById("toReplace").innerHTML = monthNames[realTimeDate.getMonth()] + ' ' +
-                                                                realTimeDate.getDate() + ', ' + realTimeDate.getFullYear();
-                document.getElementById("matchLocation").innerHTML = matchLocation;
-                document.getElementById("matchup").innerHTML = currentTeam.teamName + " vs " + opponent;
-            }
+            
+            
         </script>
     </body>
 </html>

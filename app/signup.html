@@ -191,18 +191,18 @@
                     firebase.auth().createUserWithEmailAndPassword(email, password)
                     .then(() => {
                         
-                        
-                        writeUserData(document.getElementById("inputUsername").value.replace(".",""),
+                            writeUserData(document.getElementById("inputUsername").value.replace(".",""),
                             document.getElementById("inputFirstName").value,
                             document.getElementById("inputLastName").value,
                             userType,
-                            document.getElementById("inputTeamName").value);
-                        
-                        writeTeamData(document.getElementById("inputTeamName").value);
-                        
-                        console.log("eeeeeee");
-                        goToPage('/index.html');
-                        
+                            document.getElementById("inputTeamName").value)
+                            var usersRef = firebase.database().ref('matches');
+                            usersRef.once('value', function(snapshot) {
+                                if (!snapshot.hasChild(document.getElementById("inputTeamName").value)) {
+                                    writeTeamData(document.getElementById("inputTeamName").value);
+                                    goToPage('/index.html');
+                                }
+                            });
                     })
                     .catch(function(error) {
                         var errorMessage = error.message;

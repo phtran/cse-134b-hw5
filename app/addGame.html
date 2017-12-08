@@ -78,6 +78,20 @@
             }
                 
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
@@ -157,6 +171,9 @@
             <button onclick="validateGame();" class="btn">Add Game</button>
         </div>
         <script>
+                        
+            
+            
             function validateGame() {
                 let validated = true;
                 var errorsText = "We have found the following errors: <ul>";
@@ -205,22 +222,22 @@
                         goalKicks0: 0,
                         goalKicks1: 0
                     };
-
-                    if (document.getElementById("homeBox").checked) {
-                        currentTeam.addMatch(document.getElementById("inputTeam").value,
-                                             document.getElementById("inputDate").value,
-                                             document.getElementById("inputLocation").value,
-                                             "home",
-                                             stats);
-                    } else {
-                        currentTeam.addMatch(document.getElementById("inputTeam").value,
-                                             document.getElementById("inputDate").value,
-                                             document.getElementById("inputLocation").value,
-                                             "away",
-                                             stats);
-                    }
-        
-                    goToPage('/viewGameSchedule.html');
+                    
+                    var matchId = Math.floor(Math.random() * 5001);
+                    var statsRef = firebase.database().ref('matches/'+currentUser.teamName);
+                    statsRef.once('value', function(snapshot) {
+                        while(snapshot.hasChild(matchId.toString())) {
+                            matchId = Math.floor(Math.random() * 5001);
+                        }
+                        if (document.getElementById("homeBox").checked) {
+                        pushMatch (currentUser.teamName, matchId, document.getElementById("inputTeam").value,
+                                   document.getElementById("inputDate").value, document.getElementById("inputLocation").value, "home", stats);
+                        } else {
+                            pushMatch (currentUser.teamName, matchId, document.getElementById("inputTeam").value,
+                                   document.getElementById("inputDate").value, document.getElementById("inputLocation").value, "away", stats);
+                        } 
+                        goToPage('/viewGameSchedule.html');
+                    });   
                 } else {
                     errorsText += "</ul>";
                     document.getElementById("errorMessage").style.display = "block";
@@ -229,6 +246,7 @@
                 }
             }
 
+            
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
         </script>
     </body>

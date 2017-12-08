@@ -95,6 +95,20 @@
             
             
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
     </head>
@@ -253,9 +267,9 @@
         </div>
         <script>
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
-            let curr_match = currentTeam.currentMatch;
+            let curr_match = currentMatch;
 
-            let match_name = "<h2>" + currentTeam.teamName + " vs. "  + curr_match.opponent + "</h2>";
+            let match_name = "<h2>" + currentUser.teamName + " vs. "  + curr_match.opponent + "</h2>";
             match_name += "<p><b style='font-size:200%''>" + curr_match.stats.results0 + " : " + curr_match.stats.results1 + "</b></p><br>";
 
             let foul0 = "<b>" + parseInt(curr_match.stats.foul0) + "</b>";
