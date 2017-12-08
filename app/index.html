@@ -47,7 +47,9 @@
             }
             
         </style>
-        <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
         <script>
             // Initialize Firebase
             var config = {
@@ -61,7 +63,6 @@
             firebase.initializeApp(config);
         </script>
         <script src="/js/util.js"></script>
-        <script src="/js/initializeThings.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
 
@@ -89,10 +90,9 @@
               </div>  
             </form>
             <div id="errorMessage">
-                Username and Password entered do not match our records. Create a profile or log in using "admin" and "admin".
-                <br>
-                <br>
+                Username and Password entered do not match our records. Create a profile or log in using "admin" and "admin".                
             </div>
+            <br>
             <div class="form-group" style="text-align:center;">
                   <button onclick="validate()" class="btn">Log In</button>
             </div>
@@ -147,25 +147,35 @@
             }
             
             function validate(){
-                var validated = false;
-                for (var i=0; i<users.length; i++){
-                    if (document.getElementById("inputUsername").value==users[i].username &&
-                       document.getElementById("inputPassword").value==users[i].pass){
-                        validated = true;
-                        currentUser = users[i];
-                        for (var j=0; j<teams.length; j++){
-                            if(currentUser.teamName == teams[j].teamName){
-                                currentTeam = teams[j];
-                            }
-                        }
-                        break;
-                    }
-                }
-                if (validated){
-                    goToPage('/homeScreen.html');
-                } else {
-                    document.getElementById("errorMessage").style.display = "block";
-                }
+                let email = document.getElementById("inputUsername").value;
+                let password = document.getElementById("inputPassword").value;
+                
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                    .then(() => {
+                        return firebase.auth().signInWithEmailAndPassword(email, password)
+                                    .then(() => {
+                                        // Set el current user y el current team
+                                        var currentUserRef = firebase.database().ref('users/' + email.replace(".",""));
+                                       
+                                        currentUserRef.on('value', function(snapshot) {
+                                            currentUser = snapshot.val();
+                                            var currentTeamRef = firebase.database().ref('teams/' + currentUser.teamName);
+                                             currentTeamRef.on('value', function(snapshot2) {
+                                                     currentTeam = snapshot2.val();
+                                                     goToPage('/homeScreen.html');
+                                            });
+                                        });
+                                    })
+                                    .catch((signInError) => {
+                                        document.getElementById("errorMessage").style.display = "block";
+                                        document.getElementById("errorMessage").innerHTML = signInError.message;
+                                    });
+                    })
+                    .catch((error) => {
+                        document.getElementById("errorMessage").style.display = "block";
+                        document.getElementById("errorMessage").innerHTML = error.message;
+                        scrollTo(0,0);
+                    });
             }
             
         </script>

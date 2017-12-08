@@ -27,7 +27,6 @@ const cacheFiles = [
   '/img/profile.png',
   // JS Files
   '/sw.js',
-  '/js/initializeThings.js',
   '/js/pageRedirection.js',
   '/js/util.js',
   // Misc. Files

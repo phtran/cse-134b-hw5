@@ -67,8 +67,26 @@
                 cursor: pointer;
             }
             
+            #errorMessage {
+                color: red;
+                display: none;
+            }
             
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
     </head>
@@ -115,10 +133,24 @@
               <button onclick="goToPage('/addPlayer.html')" class="btn">Add a player</button>
               <br>
               <br>
-              <button onclick="goToPage('/index.html')" class="btn btn-danger">Log out</button>
+              <button onclick="logOut()" class="btn btn-danger">Log out</button>
+              <br>
+              <div id="errorMessage">
+                Username and Password entered do not match our records. Create a profile or log in using "admin" and "admin".
+            </div>
         </div>
         <script>
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
+            
+            function logOut(){
+                firebase.auth().signOut().then(function() {
+                    currentUser = null;
+                    goToPage('/index.html');
+                }).catch(function(error) {
+                    document.getElementById("errorMessage").style.display = "block";
+                    document.getElementById("errorMessage").innerHTML = error.message;
+                });
+            }
         </script>
     </body>
 </html>

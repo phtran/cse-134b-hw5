@@ -1,5 +1,3 @@
-var users = JSON.parse(sessionStorage.getItem("users"));
-var teams = JSON.parse(sessionStorage.getItem("teams"));
 var currentTeam = JSON.parse(sessionStorage.getItem("currentTeam"));
 
 // Functions are not parsed so we have to define them again
@@ -33,8 +31,24 @@ if (currentTeam){
     
 }
 
-
 var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+
+
+
+function writeUserData(username, fName, lName, type, teamName) {
+  firebase.database().ref('users/' + username).set({
+    Name: fName+" "+lName,
+    type : type,
+    teamName: teamName
+  });
+}
+
+function writeTeamData(teamName) {
+  firebase.database().ref('teams/' + teamName).set({
+      teamName: teamName
+  });
+}
+
 
 function User (username, fName, lName, pass, type, teamName){
     this.username = username;

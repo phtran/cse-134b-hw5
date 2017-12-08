@@ -44,7 +44,9 @@
             }
             
         </style>
-        <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
         <script>
             // Initialize Firebase
             var config = {
@@ -74,9 +76,9 @@
              <div id="errorMessage"></div>
              <form id="signUpForm">
               <div class="form-group row justify-content-sm-center">
-                <label for="inputUsernameSignUp" class="col-sm-2 col-form-label">Username (Email)</label>
+                <label for="inputUsername" class="col-sm-2 col-form-label">Username (Email)</label>
                 <div class="col-sm-5">
-                    <input type="email" class="form-control" id="inputUsernameSignUp" placeholder="example@gmail.com">
+                    <input type="email" class="form-control" id="inputUsername" placeholder="example@gmail.com">
                 </div>
               </div>
               <div class="form-group row justify-content-sm-center">
@@ -98,9 +100,9 @@
                 </div>
               </div>
               <div class="form-group row justify-content-sm-center">
-                <label for="inputPasswordSignUp" class="col-sm-2 col-form-label">Password</label>
+                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-5">
-                    <input type="password" class="form-control" id="inputPasswordSignUp">
+                    <input type="password" class="form-control" id="inputPassword">
                 </div>
               </div>
               <div class="form-group row justify-content-sm-center">
@@ -134,89 +136,7 @@
         </div>
         
         <script>
-            /*function signUp(){
-
-                var validated = true;
-                var errorsText = "We have found the following errors: <ul>";
-                
-                if (!document.getElementById("inputUsernameSignUp").value){
-                    errorsText += "<li>Invalid Username</li>";
-                    validated = false;
-                }
-                
-                for (var i=0; i<users.length; i++){
-                    if (document.getElementById("inputUsername").value == users[i].username){
-                        errorsText += "<li>Username already taken</li>";
-                        validated = false;
-                    }
-                }
-                
-                if (!document.getElementById("inputFirstName").value){
-                    errorsText += "<li>First Name is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputLastName").value){
-                    errorsText += "<li>Last Name is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputTeamName").value){
-                    errorsText += "<li>Team Name is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputPasswordSignUp").value){
-                    errorsText += "<li>Password is required</li>";
-                    validated = false;
-                } else {                    
-                    if (document.getElementById("inputPasswordSignUp").value != document.getElementById("inputPasswordC").value){
-                        errorsText += "<li>Confirmation password does not match</li>";
-                        validated = false;
-                    }
-                }
-                
-                var userType;
-                if (document.getElementById('type1').checked) {
-                    userType = document.getElementById('type1').value;
-                } else if (document.getElementById('type2').checked) {
-                    userType = document.getElementById('type2').value;
-                } else if (document.getElementById('type3').checked) {
-                    userType = document.getElementById('type3').value;
-                } else {
-                    errorsText += "<li>You have to select one user type</li>";
-                    validated = false;
-                }
-                
-                if (validated){
-                    let email = document.getElementById("inputUsernameSignUp").value;
-                    let password = document.getElementById("inputPasswordSignUp").value;
-                    firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then(() => {
-                        goToPage('/index.html');
-                    })
-                    .catch(function(error) {
-                        var errorMessage = error.message;
-                        document.getElementById("errorMessage").style.display = "block";
-                        document.getElementById("errorMessage").innerHTML = errorMessage;
-                    });
-                    addUser(document.getElementById("inputUsernameSignUp").value,
-                            document.getElementById("inputFirstName").value,
-                            document.getElementById("inputLastName").value,
-                            document.getElementById("inputPasswordSignUp").value,
-                            userType,
-                            document.getElementById("inputTeamName").value
-                           );
-                } else {
-                    errorsText += "</ul>";
-                    document.getElementById("errorMessage").style.display = "block";
-                    document.getElementById("errorMessage").innerHTML = errorsText;
-                    document.getElementById("inputPassword").value ="";
-                    document.getElementById("inputPasswordC").value ="";
-                    scrollTo(0,0);
-                }
-            }
-            */
+            
             function signUp(){
                 var validated = true;
                 var errorsText = "We have found the following errors: <ul>";
@@ -225,13 +145,7 @@
                     errorsText += "<li>Invalid Username</li>";
                     validated = false;
                 }
-                
-                for (var i=0; i<users.length; i++){
-                    if (document.getElementById("inputUsername").value == users[i].username){
-                        errorsText += "<li>Username already taken</li>";
-                        validated = false;
-                    }
-                }
+
                 
                 if (!document.getElementById("inputFirstName").value){
                     errorsText += "<li>First Name is required</li>";
@@ -271,22 +185,43 @@
                 }
                 
                 if (validated){
-                    addUser(document.getElementById("inputUsername").value,
+                    let email = document.getElementById("inputUsername").value;
+                    let password = document.getElementById("inputPassword").value;
+                    
+                    firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then(() => {
+                        
+                        
+                        writeUserData(document.getElementById("inputUsername").value.replace(".",""),
                             document.getElementById("inputFirstName").value,
                             document.getElementById("inputLastName").value,
-                            document.getElementById("inputPassword").value,
                             userType,
-                            document.getElementById("inputTeamName").value
-                           );
+                            document.getElementById("inputTeamName").value);
+                        
+                        writeTeamData(document.getElementById("inputTeamName").value);
 
-                    goToPage('/index.html');
+                        /*this.teamName = teamName;
+
+                        this.currentPlayer = null;
+                        this.currentMatch = null; */
+
+                        // Add a team
+
+                        goToPage('/index.html');
+                        
+                    })
+                    .catch(function(error) {
+                        var errorMessage = error.message;
+                        document.getElementById("errorMessage").style.display = "block";
+                        document.getElementById("errorMessage").innerHTML = errorMessage;
+                        document.getElementById("inputPassword").value ="";
+                        document.getElementById("inputPasswordC").value ="";
+                        scrollTo(0,0);
+                    });
                 } else {
                     errorsText += "</ul>";
                     document.getElementById("errorMessage").style.display = "block";
                     document.getElementById("errorMessage").innerHTML = errorsText;
-                    document.getElementById("inputPassword").value ="";
-                    document.getElementById("inputPasswordC").value ="";
-                    scrollTo(0,0);
                 }
             }
         </script>
