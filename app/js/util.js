@@ -1,5 +1,7 @@
-var currentTeam = JSON.parse(sessionStorage.getItem("currentTeam"));
+var currentPlayer = JSON.parse(sessionStorage.getItem("currentPlayer"));
+var currentMatch = JSON.parse(sessionStorage.getItem("currentMatch"));
 
+/*
 // Functions are not parsed so we have to define them again
 if (currentTeam){
     currentTeam.addPlayer = function (image, fName, lName, email, dBirth, number, position, isCaptain){
@@ -29,10 +31,13 @@ if (currentTeam){
         }
     }
     
-}
+}*/
 
 var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
+console.log(currentUser);
+console.log(currentPlayer);
+console.log(currentMatch);
 
 
 function writeUserData(username, fName, lName, type, teamName) {
@@ -44,9 +49,35 @@ function writeUserData(username, fName, lName, type, teamName) {
 }
 
 function writeTeamData(teamName) {
-  firebase.database().ref('teams/' + teamName).set({
-      teamName: teamName
-  });
+    firebase.database().ref('matches/' + teamName).push({
+        id : 1,
+        opponent : "Bellota FC",
+        date : new Date(),
+        location : "San Diego",
+        status : "Home",
+        stats : null
+    });
+    
+    firebase.database().ref('players/' + teamName).push({
+        //image = image;
+        fName : "Pablo",
+        lName : "Canas",
+        email : "pabloPlayer@gmail.com",
+        dBirth : new Date(),
+        number : 10,
+        position : "Forward",
+        isCaptain : true,
+        fouls : 0,
+        redCards : 0,
+        yellowCards : 0,
+        shotsOnGoal : 0,
+        goals : 0,
+        assists : 0,
+        cornerKicks : 0,
+        penaltyKicks : 0,
+        throwIn : 0,
+        appearances : 0
+    });
 }
 
 

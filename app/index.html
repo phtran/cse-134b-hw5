@@ -146,6 +146,8 @@
               }
             }
             
+            console.log(firebase.database().ref('matches/Team'));
+            
             function validate(){
                 let email = document.getElementById("inputUsername").value;
                 let password = document.getElementById("inputPassword").value;
@@ -159,11 +161,7 @@
                                        
                                         currentUserRef.on('value', function(snapshot) {
                                             currentUser = snapshot.val();
-                                            var currentTeamRef = firebase.database().ref('teams/' + currentUser.teamName);
-                                             currentTeamRef.on('value', function(snapshot2) {
-                                                     currentTeam = snapshot2.val();
-                                                     goToPage('/homeScreen.html');
-                                            });
+                                            goToPage('/homeScreen.html');
                                         });
                                     })
                                     .catch((signInError) => {
