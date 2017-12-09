@@ -1,13 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 296 kb | Total time: 2.89 s --> 
-        <!-- html file size: 16.1 kb | Time: 690 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.12 s -->
-        <!-- logo2.png file size: 122 kb  | Time: 2.04 s -->
-        <!-- profile.png: 134 kb | Time: 2.12 s -->
-        <!-- util.js file size: 1.4 kb | Time: 601 ms -->
-        <!-- pageRedirection.js file size: 442 b | Time: 605 ms -->
         <title>Edit Player</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -131,9 +124,9 @@
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
         <script>
+            currentMatch = null;
             if (currentUser == null){
                 currentPlayer = null;
-                currentMatch = null;
                 goToPage("/index.html");
             }
         </script>
@@ -263,103 +256,104 @@
             document.getElementById("inputCaptain").checked = currentPlayer.isCaptain;
             
             function update (){
-                let validated = true;
-                var errorsText = "We have found the following errors: <ul>";
-                
-                if (!document.getElementById("inputFile").value){
-                    errorsText += "<li>Image is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputFirstName").value){
-                    errorsText += "<li>First Name is required</li>";
-                    validated = false;
-                }
-                
-                
-                if (!document.getElementById("inputLastName").value){
-                    errorsText += "<li>Last Name is required</li>";
-                    validated = false;
-                }
-                        
-                
-                if (!document.getElementById("inputEmail").value){
-                    errorsText += "<li>Email is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputBirth").value){
-                    errorsText += "<li>Date of Birth is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputJersey").value){
-                    errorsText += "<li>Jersey Number is required</li>";
-                    validated = false;
-                }
-                
-               /* for (var i=0; i<currentTeam.players.length; i++){
-                    if (currentTeam.players[i].number == document.getElementById("inputJersey").value && currentTeam.players[i].number != currentTeam.currentPlayer.number){
-                        errorsText += "<li>Number is taken</li>";
-                        this.validated = false;
-                        break;
+                if (navigator.onLine){
+                    let validated = true;
+                    var errorsText = "We have found the following errors: <ul>";
+
+                    if (!document.getElementById("inputFile").value){
+                        errorsText += "<li>Image is required</li>";
+                        validated = false;
                     }
-                }
-                */
-                
-                var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
-                playersRef.on('value', function(snapshot) {
-                    var players = snapshot.val();
-                    for (player in players) {
-                        var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
-                        playerRef.on('value', function(snapshot){
-                            var instance = snapshot.val();
-                            if (instance.fName + instance.lName == 
-                                document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value &&
-                               instance.fName + instance.lName != currentPlayer.fName+currentPlayer.lName){
-                                errorsText += "<li>Full Name cannot be repeated</li>";
-                                validated = false;
-                            }
-                            if (instance.number == document.getElementById("inputJersey").value && instance.number != currentPlayer.number){
-                                errorsText += "<li>Number is taken</li>";
-                                validated = false;
-                            }
-                        });
+
+                    if (!document.getElementById("inputFirstName").value){
+                        errorsText += "<li>First Name is required</li>";
+                        validated = false;
                     }
-                    
-                    if(validated){
-                        var currPlayerNumb = currentPlayer.number;
-                        //currentPlayer.image = document.getElementById("inputFile").value;
-                        currentPlayer.fName = document.getElementById("inputFirstName").value;
-                        currentPlayer.lName = document.getElementById("inputLastName").value;
-                        currentPlayer.email = document.getElementById("inputEmail").value;
-                        currentPlayer.dBirth = document.getElementById("inputBirth").value;
-                        currentPlayer.number = document.getElementById("inputJersey").value;
-                        currentPlayer.position = document.getElementById("inputPosition").value;
-                        currentPlayer.isCaptain = document.getElementById("inputCaptain").checked;
 
 
-                        pushPlayer (currentUser.teamName, currentPlayer.image, currentPlayer.fName, currentPlayer.lName, currentPlayer.email,       currentPlayer.dBirth, currentPlayer.number, currentPlayer.position, currentPlayer.isCaptain);
-                        
-                        if (currPlayerNumb != currentPlayer.number){
-                            firebase.database().ref('players/' + currentUser.teamName+"/"+currPlayerNumb).remove();
+                    if (!document.getElementById("inputLastName").value){
+                        errorsText += "<li>Last Name is required</li>";
+                        validated = false;
+                    }
+
+
+                    if (!document.getElementById("inputEmail").value){
+                        errorsText += "<li>Email is required</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("inputBirth").value){
+                        errorsText += "<li>Date of Birth is required</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("inputJersey").value){
+                        errorsText += "<li>Jersey Number is required</li>";
+                        validated = false;
+                    }
+
+                    var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
+                    playersRef.on('value', function(snapshot) {
+                        var players = snapshot.val();
+                        for (player in players) {
+                            var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
+                            playerRef.on('value', function(snapshot){
+                                var instance = snapshot.val();
+                                if (instance.fName + instance.lName == 
+                                    document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value &&
+                                   instance.fName + instance.lName != currentPlayer.fName+currentPlayer.lName){
+                                    errorsText += "<li>Full Name cannot be repeated</li>";
+                                    validated = false;
+                                }
+                                if (instance.number == document.getElementById("inputJersey").value && instance.number != currentPlayer.number){
+                                    errorsText += "<li>Number is taken</li>";
+                                    validated = false;
+                                }
+                            });
                         }
 
+                        if(validated){
+                            var currPlayerNumb = currentPlayer.number;
+                            //currentPlayer.image = document.getElementById("inputFile").value;
+                            currentPlayer.fName = document.getElementById("inputFirstName").value;
+                            currentPlayer.lName = document.getElementById("inputLastName").value;
+                            currentPlayer.email = document.getElementById("inputEmail").value;
+                            currentPlayer.dBirth = document.getElementById("inputBirth").value;
+                            currentPlayer.number = document.getElementById("inputJersey").value;
+                            currentPlayer.position = document.getElementById("inputPosition").value;
+                            currentPlayer.isCaptain = document.getElementById("inputCaptain").checked;
 
-                        goToPage('/viewPlayer.html');
-                    } else {
-                        errorsText += "</ul>";
+
+                            pushPlayer (currentUser.teamName, currentPlayer.image, currentPlayer.fName, currentPlayer.lName, currentPlayer.email,       currentPlayer.dBirth, currentPlayer.number, currentPlayer.position, currentPlayer.isCaptain);
+
+                            if (currPlayerNumb != currentPlayer.number){
+                                firebase.database().ref('players/' + currentUser.teamName+"/"+currPlayerNumb).remove();
+                            }
+
+
+                            goToPage('/viewPlayer.html');
+                        } else {
+                            errorsText += "</ul>";
+                            document.getElementById("errorMessage").style.display = "block";
+                            document.getElementById("errorMessage").innerHTML = errorsText;
+                            scrollTo(0,0);
+                        }
+                    });
+                } else {
                         document.getElementById("errorMessage").style.display = "block";
-                        document.getElementById("errorMessage").innerHTML = errorsText;
-                        scrollTo(0,0);
-                    }
-                });
+                        document.getElementById("errorMessage").innerHTML = "We are sorry. You need to be online to edit a player";
+                }
             }
             
             function deletePlayer () {
-                firebase.database().ref('players/' + currentUser.teamName+"/"+currentPlayer.number).remove(); 
-                currentPlayer = null;
-                goToPage('/statsPlayers.html')
+                if (navigator.onLine){
+                    firebase.database().ref('players/' + currentUser.teamName+"/"+currentPlayer.number).remove(); 
+                    currentPlayer = null;
+                    goToPage('/statsPlayers.html');
+                } else {
+                    document.getElementById("errorMessage").style.display = "block";
+                    document.getElementById("errorMessage").innerHTML = "We are sorry. You need to be online to delete a player";
+                }
             }
         </script>
     </body>

@@ -1,13 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 164 kb | Total time: 2.22 s --> 
-        <!-- html file size: 11.5 kb | Time: 692 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.03 s -->
-        <!-- util.js file size: 1.4 kb | Time: 668 ms -->
-        <!-- pageRedirection.js file size: 442 b | Time: 667 ms -->
-        <!-- logo2.png file size: 122 kb  | Time: 1.43 s -->
-        <!-- calendar.png file size: 6.2 | Time: 703 ms -->
         <title>Edit Game</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -81,8 +74,8 @@
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
         <script>
+            currentPlayer = null;
             if (currentUser == null){
-                currentPlayer = null;
                 currentMatch = null;
                 goToPage("/index.html");
             }
@@ -201,58 +194,60 @@
             }
 
             function update() {
-                let validated = true;
-                var errorsText = "We have found the following errors: <ul>";
+                if (navigator.onLine){
+                    let validated = true;
+                    var errorsText = "We have found the following errors: <ul>";
 
-                if (!document.getElementById("inputTeam").value) {
-                    errorsText += "<li>Opponent Team is required</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("inputDate").value) {
-                    errorsText += "<li>Date is required</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("inputLocation").value) {
-                    errorsText += "<li>Location is required</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("homeBox").checked && !document.getElementById("awayBox").checked) {
-                    errorsText += "<li>Status is required</li>";
-                    validated = false;
-                }
-
-                if (document.getElementById("homeBox").checked && document.getElementById("awayBox").checked) {
-                    errorsText += "<li>Game cannot be both home and away</li>";
-                    validated = false;
-                }
-
-                if (validated) {
-                    
-                    
-                    currentMatch.opponent = document.getElementById("inputTeam").value;
-                    currentMatch.date = document.getElementById("inputDate").value;
-                    currentMatch.location = document.getElementById("inputLocation").value;
-
-                    if (document.getElementById("homeBox").checked) {
-                        currentMatch.status = "home";
-                    } else {
-                        currentMatch.status = "away";
+                    if (!document.getElementById("inputTeam").value) {
+                        errorsText += "<li>Opponent Team is required</li>";
+                        validated = false;
                     }
-                    
-                    console.log(currentMatch.date);
-                    
-                    pushMatch (currentUser.teamName, currentMatch.id, currentMatch.opponent, currentMatch.date, currentMatch.location, 
-                               currentMatch.status, currentMatch.stats);
-                    
-                    goToPage('/viewGameSchedule.html');
 
+                    if (!document.getElementById("inputDate").value) {
+                        errorsText += "<li>Date is required</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("inputLocation").value) {
+                        errorsText += "<li>Location is required</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("homeBox").checked && !document.getElementById("awayBox").checked) {
+                        errorsText += "<li>Status is required</li>";
+                        validated = false;
+                    }
+
+                    if (document.getElementById("homeBox").checked && document.getElementById("awayBox").checked) {
+                        errorsText += "<li>Game cannot be both home and away</li>";
+                        validated = false;
+                    }
+
+                    if (validated) {
+                        currentMatch.opponent = document.getElementById("inputTeam").value;
+                        currentMatch.date = document.getElementById("inputDate").value;
+                        currentMatch.location = document.getElementById("inputLocation").value;
+
+                        if (document.getElementById("homeBox").checked) {
+                            currentMatch.status = "home";
+                        } else {
+                            currentMatch.status = "away";
+                        }
+
+                        pushMatch (currentUser.teamName, currentMatch.id, currentMatch.opponent, currentMatch.date, currentMatch.location, 
+                                   currentMatch.status, currentMatch.stats);
+
+                        goToPage('/viewGameSchedule.html');
+
+                    } else {
+                        errorsText += "</ul>";
+                        document.getElementById("errorMessage").style.display = "block";
+                        document.getElementById("errorMessage").innerHTML = errorsText;
+                        scrollTo(0,0);
+                    }
                 } else {
-                    errorsText += "</ul>";
                     document.getElementById("errorMessage").style.display = "block";
-                    document.getElementById("errorMessage").innerHTML = errorsText;
+                    document.getElementById("errorMessage").innerHTML = "We are sorry. You need to be online in order to edit a game";
                     scrollTo(0,0);
                 }
             }

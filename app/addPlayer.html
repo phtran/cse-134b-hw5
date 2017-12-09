@@ -1,12 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 160 kb | Total time: 2.26 s --> 
-        <!-- html file size: 13.8 kb | Time: 738 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.01 s -->
-        <!-- util.js file size: 1.4 kb | Time: 672 ms -->
-        <!-- pageRedirection.js file size: 469 b | Time: 620 ms -->
-        <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
         <title>Add Player</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -103,9 +97,9 @@
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
         <script>
+            currentPlayer = null;
+            currentMatch = null;
             if (currentUser == null){
-                currentPlayer = null;
-                currentMatch = null;
                 goToPage("/index.html");
             }
         </script>
@@ -221,77 +215,83 @@
         </div>
         <script>
             function validatePlayer (){
-                let validated = true;
-                var errorsText = "We have found the following errors: <ul>";
-                
-                if (!document.getElementById("inputFile").value){
-                    errorsText += "<li>Image is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputFirstName").value){
-                    errorsText += "<li>First Name is required</li>";
-                    validated = false;
-                }
-                
-                
-                if (!document.getElementById("inputLastName").value){
-                    errorsText += "<li>Last Name is required</li>";
-                    validated = false;
-                }
-               
-                
-                if (!document.getElementById("inputEmail").value){
-                    errorsText += "<li>Email is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputBirth").value){
-                    errorsText += "<li>Date of Birth is required</li>";
-                    validated = false;
-                }
-                
-                if (!document.getElementById("inputJersey").value){
-                    errorsText += "<li>Jersey Number is required</li>";
-                    validated = false;
-                }
-                
-                 
-                var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
-                playersRef.on('value', function(snapshot) {
-                    var players = snapshot.val();
-                    for (player in players) {
-                        var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
-                        playerRef.on('value', function(snapshot){
-                            var instance = snapshot.val();
-                            if (instance.fName + instance.lName == 
-                                document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value){
-                                errorsText += "<li>Full Name cannot be repeated</li>";
-                                validated = false;
-                            }
-                            if (instance.number == document.getElementById("inputJersey").value){
-                                errorsText += "<li>Number is taken</li>";
-                                validated = false;
-                            }
-                        });
-                    }
-                
-                
-                    if (validated) {
-                        // For the moment, cannot save images, so just put a standard one
-                        pushPlayer (currentUser.teamName, "/img/profile.png", document.getElementById("inputFirstName").value, 
-                                    document.getElementById("inputLastName").value, document.getElementById("inputEmail").value, 
-                                    document.getElementById("inputBirth").value, document.getElementById("inputJersey").value,
-                                    document.getElementById("inputPosition").value, document.getElementById("inputCaptain").checked);
+                if(navigator.onLine){
+                    let validated = true;
+                    var errorsText = "We have found the following errors: <ul>";
 
-                        goToPage('/statsPlayers.html');
-                    } else {
-                        errorsText += "</ul>";
-                        document.getElementById("errorMessage").style.display = "block";
-                        document.getElementById("errorMessage").innerHTML = errorsText;
-                        scrollTo(0,0);
+                    if (!document.getElementById("inputFile").value){
+                        errorsText += "<li>Image is required</li>";
+                        validated = false;
                     }
-                });
+
+                    if (!document.getElementById("inputFirstName").value){
+                        errorsText += "<li>First Name is required</li>";
+                        validated = false;
+                    }
+
+
+                    if (!document.getElementById("inputLastName").value){
+                        errorsText += "<li>Last Name is required</li>";
+                        validated = false;
+                    }
+
+
+                    if (!document.getElementById("inputEmail").value){
+                        errorsText += "<li>Email is required</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("inputBirth").value){
+                        errorsText += "<li>Date of Birth is required</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("inputJersey").value){
+                        errorsText += "<li>Jersey Number is required</li>";
+                        validated = false;
+                    }
+
+
+                    var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
+                    playersRef.on('value', function(snapshot) {
+                        var players = snapshot.val();
+                        for (player in players) {
+                            var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
+                            playerRef.on('value', function(snapshot){
+                                var instance = snapshot.val();
+                                if (instance.fName + instance.lName == 
+                                    document.getElementById("inputFirstName").value + document.getElementById("inputLastName").value){
+                                    errorsText += "<li>Full Name cannot be repeated</li>";
+                                    validated = false;
+                                }
+                                if (instance.number == document.getElementById("inputJersey").value){
+                                    errorsText += "<li>Number is taken</li>";
+                                    validated = false;
+                                }
+                            });
+                        }
+
+
+                        if (validated) {
+                            // For the moment, cannot save images, so just put a standard one
+                            pushPlayer (currentUser.teamName, "/img/profile.png", document.getElementById("inputFirstName").value, 
+                                        document.getElementById("inputLastName").value, document.getElementById("inputEmail").value, 
+                                        document.getElementById("inputBirth").value, document.getElementById("inputJersey").value,
+                                        document.getElementById("inputPosition").value, document.getElementById("inputCaptain").checked);
+
+                            goToPage('/statsPlayers.html');
+                        } else {
+                            errorsText += "</ul>";
+                            document.getElementById("errorMessage").style.display = "block";
+                            document.getElementById("errorMessage").innerHTML = errorsText;
+                            scrollTo(0,0);
+                        }
+                    });
+                } else {
+                    document.getElementById("errorMessage").style.display = "block";
+                    document.getElementById("errorMessage").innerHTML = "I am sorry. You need to be online in order to add a player.";
+                    scrollTo(0,0);
+                }
             }
             
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;

@@ -1,12 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 176 kb | Total time: 2.55 s --> 
-        <!-- html file size: 30.3 kb | Time: 1.05 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.05 s -->
-        <!-- util.js file size: 1.4 kb | Time: 623 ms -->
-        <!-- pageRedirection.js file size: 470 b | Time: 626 ms -->
-        <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
         <title>Edit Player Statistics</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -124,9 +118,9 @@
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
         <script>
+            currentPlayer = null;
+            currentMatch = null;
             if (currentUser == null){
-                currentPlayer = null;
-                currentMatch = null;
                 goToPage("/index.html");
             }
         </script>
@@ -203,201 +197,7 @@
                         </tr>
                     </thead>
                     <tbody id="teamRoster">
-                        <tr>
-                            <td class="zui-sticky-col">Pablo</td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="7"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Peter</td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Andrew</td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="9"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Alex</td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="7"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Tim</td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="15"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="6"></td>
-                            <td><input type="number" class="editNumber" value="8"></td>
-                            <td><input type="number" class="editNumber" value="8"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Robert</td>
-                            <td><input type="number" class="editNumber" value="6"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="7"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Kim</td>
-                            <td><input type="number" class="editNumber" value="7"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Ralph</td>
-                            <td><input type="number" class="editNumber" value="8"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="9"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Bart</td>
-                            <td><input type="number" class="editNumber" value="9"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="7"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Tina</td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="15"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="6"></td>
-                            <td><input type="number" class="editNumber" value="8"></td>
-                            <td><input type="number" class="editNumber" value="8"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Greg</td>
-                            <td><input type="number" class="editNumber" value="11"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="7"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Ryan</td>
-                            <td><input type="number" class="editNumber" value="12"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Sam</td>
-                            <td><input type="number" class="editNumber" value="13"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="2"></td>
-                            <td><input type="number" class="editNumber" value="4"></td>
-                            <td><input type="number" class="editNumber" value="9"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Bobby</td>
-                            <td><input type="number" class="editNumber" value="14"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="7"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="0"></td>
-                            <td><input type="number" class="editNumber" value="10"></td>
-                        </tr>
-                        <tr>
-                            <td class="zui-sticky-col">Dan</td>
-                            <td><input type="number" class="editNumber" value="15"></td>
-                            <td><input type="number" class="editNumber" value="3"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="15"></td>
-                            <td><input type="number" class="editNumber" value="5"></td>
-                            <td><input type="number" class="editNumber" value="1"></td>
-                            <td><input type="number" class="editNumber" value="6"></td>
-                            <td><input type="number" class="editNumber" value="8"></td>
-                            <td><input type="number" class="editNumber" value="8"></td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -438,62 +238,67 @@
             
             
             function updatePlayers () {
-                let validated = true;
                 
-                                    
-            
-              /*  var numbers = [];
-                function checkNumber (number) {
-                    let counter = 0;
-                    for (var i=0; i<currentTeam.players.length; i++) {
-                        if (numbers[i] == number){
-                            counter ++;
+                if (navigator.onLine){
+                    let validated = true;
+
+                  /*  var numbers = [];
+                    function checkNumber (number) {
+                        let counter = 0;
+                        for (var i=0; i<currentTeam.players.length; i++) {
+                            if (numbers[i] == number){
+                                counter ++;
+                            }
                         }
+                        return counter;
                     }
-                    return counter;
-                }
-                 
-                for (var i=0; i<currentTeam.players.length; i++){
-                    let num = document.getElementById("number"+currentTeam.players[i].number).value;
-                    numbers.push(num);
-                }
-                
-                for (var i=0; i<currentTeam.players.length; i++){
-                    
-                    if (checkNumber (document.getElementById("number"+currentTeam.players[i].number).value) > 1){
-                        validated = false;
+
+                    for (var i=0; i<currentTeam.players.length; i++){
+                        let num = document.getElementById("number"+currentTeam.players[i].number).value;
+                        numbers.push(num);
                     }
-                    
-                }
-            */
-                if (validated){
-                    var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
-                    playersRef.on('value', function(snapshot) {
-                        var players = snapshot.val();
-                        for (player in players) {
-                            var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
-                            playerRef.update({
-                                fouls : document.getElementById("fouls"+player).value,
-                                redCards : document.getElementById("redCards"+player).value,
-                                yellowCards : document.getElementById("yellowCards"+player).value,
-                                shotsOnGoal : document.getElementById("shotsOnGoal"+player).value,
-                                goals : document.getElementById("goals"+player).value,
-                                assists : document.getElementById("assists"+player).value,
-                                cornerKicks : document.getElementById("cornerKicks"+player).value,
-                                penaltyKicks : document.getElementById("penaltyKicks"+player).value,
-                                throwIn : document.getElementById("throwIn"+player).value,
-                                appearances : document.getElementById("appearances"+player).value,
-                                number : document.getElementById("number"+player).value
-                            });
+
+                    for (var i=0; i<currentTeam.players.length; i++){
+
+                        if (checkNumber (document.getElementById("number"+currentTeam.players[i].number).value) > 1){
+                            validated = false;
                         }
-                        goToPage('/statsPlayers.html');
-                   });
+
+                    }
+                */
+                    if (validated){
+                        var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
+                        playersRef.on('value', function(snapshot) {
+                            var players = snapshot.val();
+                            for (player in players) {
+                                var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
+                                playerRef.update({
+                                    fouls : document.getElementById("fouls"+player).value,
+                                    redCards : document.getElementById("redCards"+player).value,
+                                    yellowCards : document.getElementById("yellowCards"+player).value,
+                                    shotsOnGoal : document.getElementById("shotsOnGoal"+player).value,
+                                    goals : document.getElementById("goals"+player).value,
+                                    assists : document.getElementById("assists"+player).value,
+                                    cornerKicks : document.getElementById("cornerKicks"+player).value,
+                                    penaltyKicks : document.getElementById("penaltyKicks"+player).value,
+                                    throwIn : document.getElementById("throwIn"+player).value,
+                                    appearances : document.getElementById("appearances"+player).value,
+                                    number : document.getElementById("number"+player).value
+                                });
+                            }
+                            goToPage('/statsPlayers.html');
+                       });
+                    } else {
+                        let errorsText = "Two players cannot have the same id";
+                        document.getElementById("errorMessage").style.display = "block";
+                        document.getElementById("errorMessage").innerHTML = errorsText;
+                        scrollTo(0,0);    
+                    }
                 } else {
-                    let errorsText = "Two players cannot have the same id";
                     document.getElementById("errorMessage").style.display = "block";
-                    document.getElementById("errorMessage").innerHTML = errorsText;
-                    scrollTo(0,0);    
-                } 
+                    document.getElementById("errorMessage").innerHTML = "We are sorry. You have to be online to edit the player stats";
+                    scrollTo(0,0); 
+                }
             }
             document.getElementById("teamRoster").innerHTML = myRoster;
             

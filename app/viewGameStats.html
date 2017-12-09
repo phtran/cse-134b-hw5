@@ -1,13 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 171 kb | Total time: 2.25 s --> 
-        <!-- html file size: 19.2 kb | Time: 746 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.06 s -->
-        <!-- util.js file size: 1.4 kb | Time: 621 ms -->
-        <!-- pageRedirection.js file size: 482 b | Time: 603 ms -->
-        <!-- logo2.png file size: 122 kb  | Time: 1.43 s -->
-        <!-- edit.png file size: 6.2 kb | Time: 682 ms -->
         <title>View Game Stats</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -98,8 +91,8 @@
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
         <script>
+            currentPlayer = null;
             if (currentUser == null){
-                currentPlayer = null;
                 currentMatch = null;
                 goToPage("/index.html");
             }
@@ -261,7 +254,6 @@
         <script>
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
             let curr_match = currentMatch;
-
             let match_name = "<h2>" + currentUser.teamName + " vs. "  + curr_match.opponent + "</h2>";
             match_name += "<p><b style='font-size:200%''>" + curr_match.stats.results0 + " : " + curr_match.stats.results1 + "</b></p><br>";
 

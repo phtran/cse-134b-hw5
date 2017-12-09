@@ -1,13 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 164 kb | Total time: 2.19 s --> 
-        <!-- html file size: 12.0 kb | Time: 669 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.06 s -->
-        <!-- util.js file size: 1.4 kb | Time: 704 ms -->
-        <!-- pageRedirection.js file size: 442 b | Time: 646 ms -->
-        <!-- logo2.png file size: 122 kb  | Time: 1.44 s -->
-        <!-- calendar.png file size: 6.2 | Time: 703 ms -->
         <title>Welcome Back!</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -86,9 +79,9 @@
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
         <script>
+            currentPlayer = null;
+            currentMatch = null;
             if (currentUser == null){
-                currentPlayer = null;
-                currentMatch = null;
                 goToPage("/index.html");
             }
         </script>

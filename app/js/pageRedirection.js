@@ -4,8 +4,8 @@ function goToPage (url) {
 }
 
 function saveData () {
-    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-    sessionStorage.setItem('currentPlayer', JSON.stringify(currentPlayer));
-    sessionStorage.setItem('currentMatch', JSON.stringify(currentMatch));
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    localStorage.setItem('currentPlayer', JSON.stringify(currentPlayer));
+    localStorage.setItem('currentMatch', JSON.stringify(currentMatch));
     
 }

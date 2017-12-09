@@ -1,12 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 172 kb | Total time: 2.24 s --> 
-        <!-- html file size: 25.3 kb | Time: 749 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.06 s -->
-        <!-- util.js file size: 1.5 kb | Time: 691 ms -->
-        <!-- pageRedirection.js file size: 497 b | Time: 691 ms -->
-        <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
         <title>Edit Game Stats</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -80,8 +74,8 @@
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
         <script>
+            currentPlayer = null;
             if (currentUser == null){
-                currentPlayer = null;
                 currentMatch = null;
                 goToPage("/index.html");
             }
@@ -328,84 +322,89 @@
             }
 
             function updateGameStats() {
-                let validated = true;
-                var errorsText = "We have found the following errors: <ul>";
-                
-                if (!document.getElementById("result0i").value || !document.getElementById("result1i").value) {
-                    errorsText += "<li>Input the resulting scores on both sides</li>";
-                    validated = false;
-                }
+                if(navigator.onLine){
+                    let validated = true;
+                    var errorsText = "We have found the following errors: <ul>";
 
-                if (!document.getElementById("foul0i").value || !document.getElementById("foul1i").value) {
-                    errorsText += "<li>Input number of fouls on both sides</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("red0i").value || !document.getElementById("red1i").value) {
-                    errorsText += "<li>Input number of red cards on both sides</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("yellow0i").value || !document.getElementById("yellow1i").value) {
-                    errorsText += "<li>Input number of yellow cards on both sides</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("shots0i").value || !document.getElementById("shots1i").value) {
-                    errorsText += "<li>Input number of shots on goals on both sides</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("goal0i").value || !document.getElementById("goal1i").value) {
-                    errorsText += "<li>Input number of goals on both sides</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("corner0i").value || !document.getElementById("corner1i").value) {
-                    errorsText += "<li>Input number of corner kicks on both sides</li>";
-                    validated = false;
-                }
-
-                if (!document.getElementById("kick0i").value || !document.getElementById("kick1i").value) {
-                    errorsText += "<li>Input number of goal kicks on both sides</li>";
-                    validated = false;
-                }
-                
-                if (document.getElementById("result0i").value != document.getElementById("goal0i").value ||
-                   document.getElementById("result1i").value != document.getElementById("goal1i").value) {
-                    errorsText += "<li>Result and goals should have the same value</li>";
-                    validated = false;
-                }
-
-
-                if (validated) {
-                    var myStats = {
-                        results0 : parseInt(document.getElementById("result0i").value),
-                        results1 : parseInt(document.getElementById("result1i").value),
-                        foul0 : parseInt(document.getElementById("foul0i").value),
-                        foul1 : parseInt(document.getElementById("foul1i").value),
-                        redCards0 : parseInt(document.getElementById("red0i").value),
-                        redCards1 : parseInt(document.getElementById("red1i").value),
-                        yellowCards0 : parseInt(document.getElementById("yellow0i").value),
-                        yellowCards1 : parseInt(document.getElementById("yellow1i").value),
-                        shotsOnGoal0 : parseInt(document.getElementById("shots0i").value),
-                        shotsOnGoal1 : parseInt(document.getElementById("shots1i").value),
-                        goals0 : parseInt(document.getElementById("goal0i").value),
-                        goals1 : parseInt(document.getElementById("goal1i").value),
-                        cornerKicks0 : parseInt(document.getElementById("corner0i").value),
-                        cornerKicks1 : parseInt(document.getElementById("corner1i").value),
-                        goalKicks0 : parseInt(document.getElementById("kick0i").value),
-                        goalKicks1 : parseInt(document.getElementById("kick1i").value)
+                    if (!document.getElementById("result0i").value || !document.getElementById("result1i").value) {
+                        errorsText += "<li>Input the resulting scores on both sides</li>";
+                        validated = false;
                     }
-                    pushMatch (currentUser.teamName, currentMatch.id, currentMatch.opponent, currentMatch.date, currentMatch.location, 
-                               currentMatch.status, myStats);
-                    currentMatch.stats = myStats;
-                    goToPage('/viewGameStats.html');
+
+                    if (!document.getElementById("foul0i").value || !document.getElementById("foul1i").value) {
+                        errorsText += "<li>Input number of fouls on both sides</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("red0i").value || !document.getElementById("red1i").value) {
+                        errorsText += "<li>Input number of red cards on both sides</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("yellow0i").value || !document.getElementById("yellow1i").value) {
+                        errorsText += "<li>Input number of yellow cards on both sides</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("shots0i").value || !document.getElementById("shots1i").value) {
+                        errorsText += "<li>Input number of shots on goals on both sides</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("goal0i").value || !document.getElementById("goal1i").value) {
+                        errorsText += "<li>Input number of goals on both sides</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("corner0i").value || !document.getElementById("corner1i").value) {
+                        errorsText += "<li>Input number of corner kicks on both sides</li>";
+                        validated = false;
+                    }
+
+                    if (!document.getElementById("kick0i").value || !document.getElementById("kick1i").value) {
+                        errorsText += "<li>Input number of goal kicks on both sides</li>";
+                        validated = false;
+                    }
+
+                    if (document.getElementById("result0i").value != document.getElementById("goal0i").value ||
+                       document.getElementById("result1i").value != document.getElementById("goal1i").value) {
+                        errorsText += "<li>Result and goals should have the same value</li>";
+                        validated = false;
+                    }
+
+
+                    if (validated) {
+                        var myStats = {
+                            results0 : parseInt(document.getElementById("result0i").value),
+                            results1 : parseInt(document.getElementById("result1i").value),
+                            foul0 : parseInt(document.getElementById("foul0i").value),
+                            foul1 : parseInt(document.getElementById("foul1i").value),
+                            redCards0 : parseInt(document.getElementById("red0i").value),
+                            redCards1 : parseInt(document.getElementById("red1i").value),
+                            yellowCards0 : parseInt(document.getElementById("yellow0i").value),
+                            yellowCards1 : parseInt(document.getElementById("yellow1i").value),
+                            shotsOnGoal0 : parseInt(document.getElementById("shots0i").value),
+                            shotsOnGoal1 : parseInt(document.getElementById("shots1i").value),
+                            goals0 : parseInt(document.getElementById("goal0i").value),
+                            goals1 : parseInt(document.getElementById("goal1i").value),
+                            cornerKicks0 : parseInt(document.getElementById("corner0i").value),
+                            cornerKicks1 : parseInt(document.getElementById("corner1i").value),
+                            goalKicks0 : parseInt(document.getElementById("kick0i").value),
+                            goalKicks1 : parseInt(document.getElementById("kick1i").value)
+                        }
+                        pushMatch (currentUser.teamName, currentMatch.id, currentMatch.opponent, currentMatch.date, currentMatch.location, 
+                                   currentMatch.status, myStats);
+                        currentMatch.stats = myStats;
+                        goToPage('/viewGameStats.html');
+                    } else {
+                        errorsText += "</ul>";
+                        document.getElementById("errorMessage").style.display = "block";
+                        document.getElementById("errorMessage").innerHTML = errorsText;
+                        scrollTo(0,0);
+                    }
                 } else {
-                    errorsText += "</ul>";
                     document.getElementById("errorMessage").style.display = "block";
-                    document.getElementById("errorMessage").innerHTML = errorsText;
-                    scrollTo(0,0);
+                    document.getElementById("errorMessage").innerHTML = "We are sorry. You need to be online to edit the stats.";
                 }
             }
 

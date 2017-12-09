@@ -1,12 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 152 kb | Total time: 2.26 s --> 
-        <!-- html file size: 5.8 kb | Time: 748 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.10 s -->
-        <!-- util.js file size: 1.4 kb | Time: 665 ms -->
-        <!-- pageRedirection.js file size: 497 b | Time: 684 ms -->
-        <!-- logo2.png file size: 122 kb  | Time: 1.43 s -->
         <title>Manage</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -76,9 +70,10 @@
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
         <script>
+                
+            currentPlayer = null;
+            currentMatch = null;
             if (currentUser == null){
-                currentPlayer = null;
-                currentMatch = null;
                 goToPage("/index.html");
             }
         </script>
@@ -143,7 +138,7 @@
               <button onclick="logOut()" class="btn btn-danger">Log out</button>
               <br>
               <div id="errorMessage">
-                Username and Password entered do not match our records. Create a profile or log in using "admin" and "admin".
+                
             </div>
         </div>
         <script>

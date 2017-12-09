@@ -1,11 +1,6 @@
-var currentPlayer = JSON.parse(sessionStorage.getItem("currentPlayer"));
-var currentMatch = JSON.parse(sessionStorage.getItem("currentMatch"));
-var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-
-console.log(currentUser);
-console.log(currentPlayer);
-console.log(currentMatch);
-
+var currentPlayer = JSON.parse(localStorage.getItem("currentPlayer"));
+var currentMatch = JSON.parse(localStorage.getItem("currentMatch"));
+var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
 function writeUserData(username, fName, lName, type, teamName) {
   firebase.database().ref('users/' + username).set({
