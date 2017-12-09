@@ -1,13 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 153 kb | Total time: 2.21 s --> 
-        <!-- html file size: 6.3 kb | Time:  676 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.07 s -->
-        <!-- util.js file size: 1.4 kb | Time: 757 ms -->
-        <!-- initializeThings.js file size: 296 b | Time: 743 ms -->
-        <!-- pageRedirection.js file size: 442 b | Time: 749 ms -->
-        <!-- logo2.png file size: 122 kb  | Time: 1.42 s -->
         <title>Welcome to Soccer Tracker!</title>
         
         <meta name="theme-color" content="#365620">
@@ -47,6 +40,15 @@
             }
             
         </style>
+        <script src="/js/pageRedirection.js"></script>
+        <script src="/js/util.js"></script>
+        <script>
+            if (currentUser != null){
+                currentPlayer = null;
+                currentMatch = null;
+                goToPage("/homeScreen.html");
+            }
+        </script>
         <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
@@ -62,8 +64,6 @@
             };
             firebase.initializeApp(config);
         </script>
-        <script src="/js/util.js"></script>
-        <script src="/js/pageRedirection.js"></script>
     </head>
 
     <body>

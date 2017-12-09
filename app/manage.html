@@ -73,6 +73,15 @@
             }
             
         </style>
+        <script src="/js/pageRedirection.js"></script>
+        <script src="/js/util.js"></script>
+        <script>
+            if (currentUser == null){
+                currentPlayer = null;
+                currentMatch = null;
+                goToPage("/index.html");
+            }
+        </script>
         <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
         <script>
@@ -87,8 +96,6 @@
             };
             firebase.initializeApp(config);
         </script>
-        <script src="/js/pageRedirection.js"></script>
-        <script src="/js/util.js"></script>
     </head>
 
     <body>        

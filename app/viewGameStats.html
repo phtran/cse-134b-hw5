@@ -95,22 +95,15 @@
             
             
         </style>
-        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
-        <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
-                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
-                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
-                projectId: "cse-134b-hw5-pap",
-                storageBucket: "cse-134b-hw5-pap.appspot.com",
-                messagingSenderId: "763282141975"
-            };
-            firebase.initializeApp(config);
-        </script>
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
+        <script>
+            if (currentUser == null){
+                currentPlayer = null;
+                currentMatch = null;
+                goToPage("/index.html");
+            }
+        </script>
     </head>
 
     <body>        

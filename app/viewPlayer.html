@@ -1,14 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Total page size: 296 kb | Total time: 2.96 s --> 
-        <!-- html file size: 10.2 kb | Time: 704 ms -->
-        <!-- bootstrap.min.css file size: 22.3 kb | Time: 1.19 s -->
-        <!-- logo2.png file size: 122 kb  | Time: 2.14 s -->
-        <!-- edit.png file size: 6.2 kb | Time: 778 ms -->
-        <!-- profile.png: 134 kb | Time: 2.`8 s -->
-        <!-- util.js file size: 1.4 kb | Time: 651 ms -->
-        <!-- pageRedirection.js file size: 442 b | Time: 726 ms -->
         <title>View Player</title>
         <meta name="theme-color" content="#365620">
         <meta charset="utf-8" />
@@ -134,11 +126,16 @@
             th {
                 color: darkolivegreen;
             }
-            
-            
         </style>
         <script src="/js/pageRedirection.js"></script>
         <script src="/js/util.js"></script>
+        <script>
+            if (currentUser == null){
+                currentPlayer = null;
+                currentMatch = null;
+                goToPage("/index.html");
+            }
+        </script>
     </head>
 
     <body>        
