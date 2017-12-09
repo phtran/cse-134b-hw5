@@ -410,8 +410,7 @@
                     var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
                     playerRef.on('value', function(snapshot){
                         var instance = snapshot.val();
-                        myRoster += "<tr> <td class='zui-sticky-col' onclick='getPlayer("+instance.number+")'             style='cursor:pointer'>"+instance.fName +
-                        " "+instance.lName+"</td>";
+                        myRoster += "<tr> <td class='zui-sticky-col' style='cursor:pointer'>"+instance.fName+" "+instance.lName+"</td>";
                         myRoster += "<td><label for='number"+instance.number+"'>.</label><input type='number' id='number"+instance.number+"' class='editNumber' value='"+instance.number+"'></td>";
                         myRoster += "<td><label for='fouls"+instance.number+"'>.</label><input type='number' id='fouls"+instance.number+"' class='editNumber' value='"+instance.fouls+"'></td>";
                         myRoster += "<td><label for='redCards"+instance.number+"'>.</label><input type='number' id='redCards"+instance.number+"' class='editNumber' value='"+instance.redCards+"'></td>";
@@ -426,16 +425,7 @@
                     });
                 }
                 document.getElementById("teamRoster").innerHTML = myRoster;
-            });
-            
-            function getPlayer (jNumber){
-                var playerRef = firebase.database().ref('players/' + currentUser.teamName+"/"+jNumber);                     
-                playerRef.on('value', function(snapshot) {
-                    var instance = snapshot.val();
-                    currentPlayer = instance; 
-                    goToPage('/viewPlayer.html');
-                });
-            }           
+            });         
             
             function updatePlayers () {
                 let validated = true;
