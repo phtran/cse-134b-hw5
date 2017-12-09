@@ -224,7 +224,6 @@
                     };
                     
                     var matchId = Math.floor(Math.random() * 5001);
-                    console.log(matchId);
                     var statsRef = firebase.database().ref('matches/'+currentUser.teamName);
                     statsRef.once('value', function(snapshot) {
                         while(snapshot.hasChild(matchId.toString())) {
@@ -237,9 +236,8 @@
                             pushMatch (currentUser.teamName, matchId, document.getElementById("inputTeam").value,
                                    document.getElementById("inputDate").value, document.getElementById("inputLocation").value, "away", stats);
                         } 
-                        //goToPage('/viewGameSchedule.html');
+                        goToPage('/viewGameSchedule.html');
                     });
-                    console.log("After" + matchId);
                 } else {
                     errorsText += "</ul>";
                     document.getElementById("errorMessage").style.display = "block";
