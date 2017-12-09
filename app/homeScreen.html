@@ -185,7 +185,7 @@
             let realTimeDate = new Date(Date.now());
             var monthNames = ["January", "February", "March","April", "May", "June", "July",
                               "August", "September", "October","November", "December"];
-            
+            var matchLocation;
             var matchesRef = firebase.database().ref('matches/' + currentUser.teamName);                     
             matchesRef.on('value', function(snapshot) {
                 var matches = snapshot.val();
@@ -200,21 +200,21 @@
                              if (currentMatchDate.getFullYear() === realTimeDate.getFullYear() &&
                                  currentMatchDate.getMonth() === realTimeDate.getMonth() && 
                                  currentMatchDate.getDate() === realTimeDate.getDate()) {
-                                    this.matchLocation = instance.location;
-                                    this.opponent = instance.opponent;
+                                    matchLocation = instance.location;
+                                    opponent = instance.opponent;
                               }
                         });
                     }
                 }
 
-                if (this.matchLocation === undefined) {
+                if (matchLocation === undefined) {
                   document.getElementById("matchDetails").innerHTML = "No matches today! :(";
                 }
                 else {
                     document.getElementById("toReplace").innerHTML = monthNames[realTimeDate.getMonth()] + ' ' +
                                                                     realTimeDate.getDate() + ', ' + realTimeDate.getFullYear();
-                    document.getElementById("matchLocation").innerHTML = this.matchLocation;
-                    document.getElementById("matchup").innerHTML = currentUser.teamName + " vs " + this.opponent;
+                    document.getElementById("matchLocation").innerHTML = matchLocation;
+                    document.getElementById("matchup").innerHTML = currentUser.teamName + " vs " + opponent;
                 }
            });
             

@@ -254,7 +254,7 @@
                 firebase.database().ref('matches/' + currentUser.teamName+"/"+currentMatch.id).remove();
                 firebase.database().ref('matches/' + currentUser.teamName+"/stats/"+currentMatch.id).remove(); 
                 currentMatch = null;
-                goToPage('/viewGameSchedule.html')
+                goToPage('/viewGameSchedule.html');
             }
         </script>
     </body>

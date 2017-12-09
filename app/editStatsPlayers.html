@@ -117,8 +117,24 @@
                 display: none;
                 text-align: left;
             }
+            
+            
 
         </style>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyChPwIV73hCe12Bldg_JlcVCHRwEQdUX1U",
+                authDomain: "cse-134b-hw5-pap.firebaseapp.com",
+                databaseURL: "https://cse-134b-hw5-pap.firebaseio.com",
+                projectId: "cse-134b-hw5-pap",
+                storageBucket: "cse-134b-hw5-pap.appspot.com",
+                messagingSenderId: "763282141975"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="/js/util.js"></script>
         <script src="/js/pageRedirection.js"></script>
     </head>
@@ -386,31 +402,15 @@
             document.getElementById("teamNameValue").innerHTML = currentUser.teamName;
             
             let myRoster= "";
-            /*for (var i=0; i<currentTeam.players.length; i++){
-                myRoster += "<tr> <td class='zui-sticky-col' style='cursor:pointer'>"+currentTeam.players[i].fName +
-                " "+currentTeam.players[i].lName+"</td>";
-                myRoster += "<td><label for='number"+currentTeam.players[i].number+"'>.</label><input type='number' id='number"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].number+"'></td>";
-                myRoster += "<td><label for='fouls"+currentTeam.players[i].number+"'>.</label><input type='number' id='fouls"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].fouls+"'></td>";
-                myRoster += "<td><label for='redCards"+currentTeam.players[i].number+"'>.</label><input type='number' id='redCards"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].redCards+"'></td>";
-                myRoster += "<td><label for='yellowCards"+currentTeam.players[i].number+"'>.</label><input type='number' id='yellowCards"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].yellowCards+"'></td>";
-                myRoster += "<td><label for='shotsOnGoal"+currentTeam.players[i].number+"'>.</label><input type='number' id='shotsOnGoal"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].shotsOnGoal+"'></td>";
-                myRoster += "<td><label for='goals"+currentTeam.players[i].number+"'>.</label><input type='number' id='goals"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].goals+"'></td>";
-                myRoster += "<td><label for='assists"+currentTeam.players[i].number+"'>.</label><input type='number' id='assists"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].assists+"'></td>";
-                myRoster += "<td><label for='cornerKicks"+currentTeam.players[i].number+"'>.</label><input type='number' id='cornerKicks"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].cornerKicks+"'></td>";
-                myRoster += "<td><label for='penaltyKicks"+currentTeam.players[i].number+"'>.</label><input type='number' id='penaltyKicks"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].penaltyKicks+"'></td>";
-                myRoster += "<td><label for='throwIn"+currentTeam.players[i].number+"'>.</label><input type='number' id='throwIn"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].throwIn+"'></td>";
-                myRoster += "<td><label for='appearances"+currentTeam.players[i].number+"'>.</label><input type='number' id='appearances"+currentTeam.players[i].number+"' class='editNumber' value='"+currentTeam.players[i].appearances+"'></td></tr>";
-            }*/
-           
-            var playersRef = firebase.database().ref('players/' + currentUser.teamName);
-
+            var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
             playersRef.on('value', function(snapshot) {
                 var players = snapshot.val();
                 for (player in players) {
                     var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
                     playerRef.on('value', function(snapshot){
                         var instance = snapshot.val();
-                        myRoster += "<tr> <td class='zui-sticky-col' style='cursor:pointer'>"+instance.fName+" "+instance.lName+"</td>";
+                        myRoster += "<tr> <td class='zui-sticky-col' style='cursor:pointer'>"+instance.fName +
+                        " "+instance.lName+"</td>";
                         myRoster += "<td><label for='number"+instance.number+"'>.</label><input type='number' id='number"+instance.number+"' class='editNumber' value='"+instance.number+"'></td>";
                         myRoster += "<td><label for='fouls"+instance.number+"'>.</label><input type='number' id='fouls"+instance.number+"' class='editNumber' value='"+instance.fouls+"'></td>";
                         myRoster += "<td><label for='redCards"+instance.number+"'>.</label><input type='number' id='redCards"+instance.number+"' class='editNumber' value='"+instance.redCards+"'></td>";
@@ -425,90 +425,17 @@
                     });
                 }
                 document.getElementById("teamRoster").innerHTML = myRoster;
-            });         
+           });
+            
+            
+            
             
             function updatePlayers () {
                 let validated = true;
-
-                var playersRef = firebase.database().ref('players/' + currentUser.teamName);
-
-                var numbers = [];
-                function checkNumber(number) {
-                    let counter = 0;
-                    let i = 0;
-                    var playersRef = firebase.database().ref('players/' + currentUser.teamName);
-                    playersRef.on('value', function(snapshot) {
-                        var players = snapshot.val();
-                        for (player in players) {
-                            if (number[i] == number) {
-                                counter++;
-                            }
-                            i++;
-                        }
-                    });
-                    return counter;
-                }
-
-
-                playersRef.on('value', function(snapshot) {
-                    var players = snapshot.val();
-                    for (player in players) {
-                        var instance = snapshot.val();
-                        let num = document.getElementById("number"+instance.number).value;
-                        numbers.push(num);
-                    }
-                });
-
-                playersRef.on('value', function(snapshot) {
-                    var players = snapshot.val();
-                    for (player in players) {
-                        var instance = snapshot.val();
-                        let num = document.getElementById("number"+instance.number).value;
-                        if (checkNumber(num) > 1) {
-                            validated = false;
-                        }
-                    }
-                });
-
-                if (validated) {
-                    playersRef.on('value', function(snapshot) {
-                        var players = snapshot.val();
-                        for (player in players) {
-                            var instance = snapshot.val();
-                            firebase.database().ref('players/' + currentUser.teamName + '/' + player).update({
-                                number: document.getElementById("number"+instance.number),
-                                fouls: document.getElementById("fouls"+instance.number),
-                                yellowCards: document.getElementById("yellowCards"+instance.number),
-                                shotsOnGoal: document.getElementById("shotsOnGoal"+instance.number),
-                                goals: document.getElementById("goals"+instance.number),
-                                assists: document.getElementById("assists"+instance.number),
-                                cornerKicks: document.getElementById("cornerKicks"+instance.number),
-                                penaltyKicks document.getElementById("penaltyKicks"+instance.number),
-                                throwIn: document.getElementById("throwIn"+instance.number),
-                                appearances: document.getElementById("appearances"+instance.number) 
-                            });
-                        }
-                    });
-                    goToPage('/statsPlayers.html');
-                } else {
-                    let errorsText = "Two players cannot have the same id";
-                    document.getElementById("errorMessage").style.display = "block";
-                    document.getElementById("errorMessage").innerHTML = errorsText;
-                    playersRef.on('value', function(snapshot) {
-                        var players = snapshot.val();
-                        for (player in players) {
-                            var instance = snapshot.val();
-                            document.getElementById("number"+instance.number).value = instance.number;
-                        }
-                    });
-                    scrollTo(0,0);  
-                }
-            }
-            
-            /*function updatePlayers () {
-                let validated = true;
                 
-                var numbers = [];
+                                    
+            
+              /*  var numbers = [];
                 function checkNumber (number) {
                     let counter = 0;
                     for (var i=0; i<currentTeam.players.length; i++) {
@@ -531,34 +458,37 @@
                     }
                     
                 }
-                
+            */
                 if (validated){
-                    for (var i=0; i<currentTeam.players.length; i++) {
-                        currentTeam.players[i].fouls = document.getElementById("fouls"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].redCards = document.getElementById("redCards"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].yellowCards = document.getElementById("yellowCards"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].shotsOnGoal = document.getElementById("shotsOnGoal"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].goals = document.getElementById("goals"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].assists = document.getElementById("assists"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].cornerKicks = document.getElementById("cornerKicks"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].penaltyKicks = document.getElementById("penaltyKicks"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].throwIn = document.getElementById("throwIn"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].appearances = document.getElementById("appearances"+currentTeam.players[i].number).value;
-                        currentTeam.players[i].number = document.getElementById("number"+currentTeam.players[i].number).value;
-                    }
-
-                    goToPage('/statsPlayers.html');
+                    var playersRef = firebase.database().ref('players/' + currentUser.teamName);                     
+                    playersRef.on('value', function(snapshot) {
+                        var players = snapshot.val();
+                        for (player in players) {
+                            var playerRef = firebase.database().ref('players/' + currentUser.teamName + "/"+player);
+                            playerRef.update({
+                                fouls : document.getElementById("fouls"+player).value,
+                                redCards : document.getElementById("redCards"+player).value,
+                                yellowCards : document.getElementById("yellowCards"+player).value,
+                                shotsOnGoal : document.getElementById("shotsOnGoal"+player).value,
+                                goals : document.getElementById("goals"+player).value,
+                                assists : document.getElementById("assists"+player).value,
+                                cornerKicks : document.getElementById("cornerKicks"+player).value,
+                                penaltyKicks : document.getElementById("penaltyKicks"+player).value,
+                                throwIn : document.getElementById("throwIn"+player).value,
+                                appearances : document.getElementById("appearances"+player).value,
+                                number : document.getElementById("number"+player).value
+                            });
+                        }
+                        goToPage('/statsPlayers.html');
+                   });
                 } else {
                     let errorsText = "Two players cannot have the same id";
                     document.getElementById("errorMessage").style.display = "block";
                     document.getElementById("errorMessage").innerHTML = errorsText;
-                    for (var i=0; i<currentTeam.players.length; i++){
-                        document.getElementById("number"+currentTeam.players[i].number).value = currentTeam.players[i].number;
-                    }
                     scrollTo(0,0);    
                 } 
-            }*/
-            //document.getElementById("teamRoster").innerHTML = myRoster;
+            }
+            document.getElementById("teamRoster").innerHTML = myRoster;
             
         </script>
     </body>
